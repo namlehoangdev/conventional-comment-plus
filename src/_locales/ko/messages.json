@@ -1,6 +1,8 @@
 {
-  "extName": { "message": "Browser Boost - 추가 도구" },
+  "extName": {
+    "message": "Conventional Comments Plus - Git VCS 주석 경험 향상"
+  },
   "extDesc": {
-    "message": "볼륨 증폭, 사용자 에이전트 변경, 마우스 오른쪽 버튼 클릭 활성화, 복사 및 선택, WebRTC 비활성화, 이미지 형식(JPG, PNG 및 WebP)으로 저장."
+    "message": "Conventional Comments Plus는 사용자 정의 가능한 주석 템플릿, 팀 구성 내보내기, 다중 Git 지원 및 어두운/밝은 모드를 통해 Git VCS를 향상시킵니다."
   }
 }
