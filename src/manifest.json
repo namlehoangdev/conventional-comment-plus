@@ -1,0 +1,48 @@
+{
+  "name": "__MSG_extName__",
+  "description": "__MSG_extDesc__",
+  "manifest_version": 3,
+  "version": "1.3.0",
+  "default_locale": "en",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "declarativeNetRequestWithHostAccess"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.bundle.js"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "128": "icon128.png"
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "content_security_policy": {
+    "extension_pages": "default-src 'self'; connect-src 'self' https://localhost:* wss://localhost:*; scri  pt-src 'self';"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://gitlab.myteksi.net/*"
+      ],
+      "js": [
+        "popup.bundle.js",
+        "background.bundle.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}
