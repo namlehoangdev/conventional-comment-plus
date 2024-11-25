@@ -1,0 +1,8 @@
+{
+  "extName": {
+    "message": "Conventional Comments Plus - Forbedre din kommenteringsopplevelse i Git VCS"
+  },
+  "extDesc": {
+    "message": "Conventional Comments Plus forbedrer Git VCS med tilpassbare kommentar-maler, eksport av teamkonfigurasjoner, støtte for flere Git-repositorier og mørk/lys modus."
+  }
+}
