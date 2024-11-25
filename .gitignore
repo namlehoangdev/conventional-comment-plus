@@ -13,8 +13,8 @@
 /zip
 
 # local idea
-/.idea
-/.vscode
+.idea
+.vscode
 
 # misc
 .DS_Store
