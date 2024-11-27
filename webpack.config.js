@@ -61,7 +61,7 @@ function combineManifests(commonConfigPath, browserSpecificConfigPath) {
     //   name: manifestName,
     //   description: manifestDescription,
     // },
-    commonConfig,
+    commonConfig
     // )
   )
 }
@@ -77,9 +77,10 @@ var options = {
   entry: {
     popup: path.join(__dirname, 'src', 'components', 'index.jsx'),
     background: path.join(__dirname, 'src', 'backgrounds', 'gitlab.js'),
+    content_script: path.join(__dirname, 'src', 'content-scripts', 'index.js'),
   },
   chromeExtensionBoilerplate: {
-    notHotReload: ['popup', 'background'],
+    notHotReload: ['background'],
   },
   output: {
     filename: '[name].bundle.js',
@@ -131,7 +132,7 @@ var options = {
             options: {
               getCustomTransformers: () => ({
                 before: [isDevelopment && ReactRefreshTypeScript()].filter(
-                  Boolean,
+                  Boolean
                 ),
               }),
               transpileOnly: isDevelopment,
@@ -179,7 +180,7 @@ var options = {
           from: 'src/manifest.json', // This path is not used but necessary for the plugin to work
           to: path.join(__dirname, 'build/manifest.json'),
           force: true,
-          transform: function(content, path) {
+          transform: function (content, path) {
             // Replace with combined manifests for Firefox
             return Buffer.from(combineManifests('src/manifest.json'))
           },
@@ -191,6 +192,15 @@ var options = {
         {
           from: 'src/assets/icons/icon128.png',
           to: path.join(__dirname, 'build'),
+          force: true,
+        },
+      ],
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: 'src/content-scripts/index.css',
+          to: path.join(__dirname, 'build/index.css'),
           force: true,
         },
       ],
@@ -226,39 +236,21 @@ var options = {
 }
 
 if (env.NODE_ENV === 'development') {
-  //options.devtool = 'cheap-module-source-map'
-  options.devtool = 'eval-source-map';
-  options.devServer = {
-    host: 'localhost',
-    port: 3000,
-    hot: true,
-    https: true, // Enable HTTPS for the dev server
-    client: {
-      webSocketURL: {
-        protocol: 'wss', // Use secure WebSocket
-        hostname: 'localhost',
-        port: 3000,
-        pathname: '/ws',
-      },
-    },
-    headers: {
-      'Access-Control-Allow-Origin': '*',  // Optional: Ensure cross-origin requests work
-    },
-  }
-
+  options.devtool = 'cheap-module-source-map'
 } else {
-  options.devtool = false
   options.optimization = {
     minimize: true,
     minimizer: [
       new TerserPlugin({
         extractComments: false,
+        terserOptions: {
+          compress: {
+            drop_console: false,
+          },
+        },
       }),
     ],
   }
-  options.plugins = options.plugins.filter(plugin => {
-    return plugin.constructor.name !== 'HotModuleReplacementPlugin';
-  });
 }
 
 module.exports = options

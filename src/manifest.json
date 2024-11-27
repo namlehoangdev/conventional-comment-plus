@@ -7,7 +7,8 @@
   "permissions": [
     "activeTab",
     "storage",
-    "declarativeNetRequestWithHostAccess"
+    "declarativeNetRequestWithHostAccess",
+    "https://gitlab.myteksi.net/*"
   ],
   "host_permissions": [
     "<all_urls>"
@@ -21,17 +22,17 @@
   "icons": {
     "128": "icon128.png"
   },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
   "declarative_net_request": {
     "rule_resources": [
       {
-        "id": "ruleset",
+        "id": "ruleset_1",
         "enabled": true,
         "path": "rules.json"
       }
     ]
-  },
-  "content_security_policy": {
-    "extension_pages": "default-src 'self'; connect-src 'self' https://localhost:* wss://localhost:*; scri  pt-src 'self';"
   },
   "content_scripts": [
     {
@@ -39,8 +40,10 @@
         "https://gitlab.myteksi.net/*"
       ],
       "js": [
-        "popup.bundle.js",
-        "background.bundle.js"
+        "content_script.bundle.js"
+      ],
+      "css": [
+        "index.css"
       ],
       "run_at": "document_idle"
     }
