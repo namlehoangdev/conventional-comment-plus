@@ -1,7 +1,4 @@
-import {
-  SEMANTIC_COMMENT_PREFIX_REGEX_PATTERN,
-  SEMANTIC_LABELS,
-} from '../constants/conventionalComments'
+import { DECORATIONS, LABELS, SEMANTIC_COMMENT_PREFIX_REGEX_PATTERN } from '../constants/conventionalComments'
 import { LOG_TAG } from '../constants'
 
 function retrieveConventionalPrefix(inputString) {
@@ -10,8 +7,8 @@ function retrieveConventionalPrefix(inputString) {
     if (match && match.length > 2) {
       return {
         conventionalPrefix: match[0],
-        label: match[1],
-        decorations: match[2] ? match[2].split(', ').map((d) => d.trim()) : [],
+        labelContent: match[1],
+        decorationContents: match[2] ? match[2].split(', ').map((d) => d.trim()) : [],
       }
     } else {
       return null
@@ -22,60 +19,63 @@ function retrieveConventionalPrefix(inputString) {
   }
 }
 
-function toggleDecoration(decorations = [], decorationToToggle = '') {
-  let newDecorations = [...decorations]
-  if (decorationToToggle.length === 0) {
+function genConventionalCommentPrefix(semanticLabel = '', decorations = []) {
+  const decoStr = decorations && decorations.length > 0 ? `${decorations.join(', ')}` : ''
+  return `**${semanticLabel}${decoStr ? ` (${decoStr})` : ''}:**`
+}
+
+function genNewData(currentText, prefixData, labelKey = '', decorationKey = '') {
+  const {
+    decorationContents: currentDecorationContents = [],
+    labelContent,
+    conventionalPrefix: currentPrefix,
+  } = prefixData || {}
+
+  const newLabelContent = labelKey.length > 0 ? LABELS[labelKey]?.content : labelContent
+  const label = getObjectByContent(LABELS, newLabelContent)
+
+  const validDecorationKeys = label ? new Set(label.decorationKeys) : new Set()
+
+  let newDecorationContents =
+    decorationKey.length > 0
+      ? toggleDecorationContent(currentDecorationContents, DECORATIONS[decorationKey]?.content)
+      : currentDecorationContents
+
+  let decorations = []
+  newDecorationContents = newDecorationContents.filter((content) => {
+    const decoObj = getObjectByContent(DECORATIONS, content)
+    if (validDecorationKeys.has(decoObj?.key)) {
+      decorations = [...decorations, decoObj]
+      return true
+    }
+    return false
+  })
+  const newPrefix = genConventionalCommentPrefix(newLabelContent, newDecorationContents)
+  const newText = currentPrefix ? currentText.replace(currentPrefix, newPrefix) : `${newPrefix} ${currentText}`
+  return { text: newText, prefix: newPrefix, label, decorations }
+}
+
+function toggleDecorationContent(decorationContents = [], decorationContentToToggle = '') {
+  let newDecorations = [...decorationContents]
+  if (decorationContentToToggle.length === 0) {
     return newDecorations
   }
-  const index = newDecorations.indexOf(decorationToToggle)
+  const index = newDecorations.indexOf(decorationContentToToggle)
   if (index === -1) {
-    newDecorations.push(decorationToToggle)
+    newDecorations.push(decorationContentToToggle)
   } else {
     newDecorations.splice(index, 1)
   }
   return newDecorations
 }
 
-function genConventionalCommentPrefix(semanticLabel = '', decorations = []) {
-  const decoStr =
-    decorations && decorations.length > 0 ? `${decorations.join(', ')}` : ''
-  return `**${semanticLabel}${decoStr ? ` (${decoStr})` : ''}:**`
+function getObjectByContent(obj, contentValue) {
+  for (const key in obj) {
+    if (obj[key]?.content === contentValue) {
+      return obj[key]
+    }
+  }
+  return null
 }
 
-function getNewData(
-  currentText,
-  prefixData,
-  semanticLabel = '',
-  decoration = ''
-) {
-  const {
-    decorations: currentDecorations = [],
-    label: currentLabel,
-    conventionalPrefix: currentPrefix,
-  } = prefixData || {}
-
-  const newSemanticLabel =
-    semanticLabel.length > 0 ? semanticLabel : currentLabel
-
-  const validDecorations = SEMANTIC_LABELS[newSemanticLabel.toUpperCase()]
-    ? new Set(SEMANTIC_LABELS[newSemanticLabel.toUpperCase()].decorations)
-    : new Set()
-
-  let newDecorations =
-    decoration.length > 0
-      ? toggleDecoration(currentDecorations, decoration)
-      : currentDecorations
-  newDecorations = newDecorations.filter((decoration) =>
-    validDecorations.has(decoration)
-  )
-  const newPrefix = genConventionalCommentPrefix(
-    newSemanticLabel,
-    newDecorations
-  )
-  const newText = currentPrefix
-    ? currentText.replace(currentPrefix, newPrefix)
-    : `${newPrefix} ${currentText}`
-  return { newText, newPrefix, newSemanticLabel, newDecorations }
-}
-
-export { retrieveConventionalPrefix, getNewData }
+export { retrieveConventionalPrefix, genNewData, getObjectByContent }

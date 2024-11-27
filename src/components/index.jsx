@@ -3,7 +3,6 @@ import { createRoot } from 'react-dom/client'
 import { ThemeUIProvider } from 'theme-ui'
 import { theme } from 'theme'
 import Popup from './popups/Popup'
-import './index.css'
 import { LOG_TAG } from 'constants'
 
 console.log(`${LOG_TAG}-run container`)

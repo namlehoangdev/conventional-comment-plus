@@ -1,84 +1,95 @@
 import React, { useState } from 'react'
 import './SemanticComponent.scss'
 
-import { SEMANTIC_LABELS } from '../../constants/conventionalComments.js'
-import { getNewData, retrieveConventionalPrefix } from '../../utils/semantic'
+import {
+  DECORATIONS,
+  DECORATIONS_PRIORITIES,
+  LABELS,
+  SEMANTIC_LABELS_PRIORITIES,
+} from '../../constants/conventionalComments.js'
+import { genNewData, retrieveConventionalPrefix } from '../../utils/semantic'
 
-export default function SemanticAndDecorationButtons({ textareaRef }) {
-  const [activeSemanticLabel, setActiveSemanticLabel] = useState('')
-  const [activeDecorations, setActiveDecorations] = useState([])
+const activeClassName = 'active'
 
-  const handleSemanticClick = (semanticLabel) => {
-    setActiveSemanticLabel(semanticLabel)
-    setActiveDecorations([]) // Reset decorations when the semantic label changes
+export default function SemanticAndDecorationButtons({ className, textareaRef, ...props }) {
+  const [activeLabelKey, setActiveLabelKey] = useState(null)
+  const [activeDecorationKeys, setActiveDecorationKeys] = useState([])
+  const validDecorationKeys = new Set(LABELS[activeLabelKey]?.decorationKeys || [])
 
-    // Update the textarea (same as before)
-    if (textareaRef.current) {
-      const currentText = textareaRef.current.value.trim()
+  const currentTextarea = textareaRef ? textareaRef.current : null
+
+  function handleLabelClick(labelKey, value) {
+    if (activeLabelKey === labelKey && labelKey?.length > 0 && currentTextarea) {
+      setActiveLabelKey(null)
+      setActiveDecorationKeys([])
+      updateTextArea('')
+      return
+    }
+
+    if (currentTextarea) {
+      const currentText = currentTextarea.value.trim()
       const prefixData = retrieveConventionalPrefix(currentText)
-      const newData = getNewData(currentText, prefixData, semanticLabel, '')
-      textareaRef.current.value = newData.newText
-      textareaRef.current.focus()
-      textareaRef.current.dispatchEvent(new Event('input', { bubbles: true }))
+      const { text, decorations, label } = genNewData(currentText, prefixData, labelKey, '')
+
+      setActiveLabelKey(label.key)
+      setActiveDecorationKeys(decorations.map((obj) => obj.key))
+
+      updateTextArea(text)
     }
   }
 
-  const handleDecorationClick = (decoration) => {
-    setActiveDecorations((prevDecorations) =>
-      prevDecorations.includes(decoration)
-        ? prevDecorations.filter((d) => d !== decoration)
-        : [...prevDecorations, decoration]
+  const handleDecorationClick = (decoKey, value) => {
+    if (currentTextarea) {
+      const currentText = currentTextarea.value.trim()
+      const prefixData = retrieveConventionalPrefix(currentText)
+
+      const { text, decorations, label } = genNewData(currentText, prefixData, activeLabelKey, decoKey)
+
+      setActiveLabelKey(label?.key)
+      setActiveDecorationKeys(decorations.map((obj) => obj.key))
+
+      updateTextArea(text)
+    }
+  }
+
+  function updateTextArea(text) {
+    currentTextarea.value = text
+    currentTextarea.focus()
+    currentTextarea.dispatchEvent(new Event('input', { bubbles: true }))
+  }
+
+  function renderLabelButton(key) {
+    const label = LABELS[key]
+    return (
+      <button
+        key={key}
+        className={activeLabelKey === key && label ? activeClassName : ''}
+        onClick={() => handleLabelClick(key, label)}
+      >
+        {label?.content}
+      </button>
     )
-
-    // Update the textarea (same as before)
-    if (textareaRef.current) {
-      const currentText = textareaRef.current.value.trim()
-      const prefixData = retrieveConventionalPrefix(currentText)
-      const newData = getNewData(
-        currentText,
-        prefixData,
-        activeSemanticLabel,
-        decoration
-      )
-      textareaRef.current.value = newData.newText
-      textareaRef.current.focus()
-      textareaRef.current.dispatchEvent(new Event('input', { bubbles: true }))
-    }
   }
 
-  const validDecorations = new Set(
-    SEMANTIC_LABELS[activeSemanticLabel.toUpperCase()]?.decorations || []
-  )
+  function renderDecorationButton(key) {
+    const decoration = DECORATIONS[key]
+
+    return (
+      <button
+        key={key}
+        className={activeDecorationKeys.includes(key) ? activeClassName : ''}
+        disabled={!validDecorationKeys.has(key)}
+        onClick={() => handleDecorationClick(key, decoration)}
+      >
+        {decoration?.content}
+      </button>
+    )
+  }
 
   return (
-    <div className="conv-comment-root">
-      <div className="semantic-buttons-container">
-        {Object.keys(SEMANTIC_LABELS).map((semanticLabel) => (
-          <button
-            key={semanticLabel}
-            className={activeSemanticLabel === semanticLabel ? 'active' : ''}
-            onClick={() => handleSemanticClick(semanticLabel)}
-          >
-            {semanticLabel}
-          </button>
-        ))}
-      </div>
-      <div className="decoration-buttons-container">
-        {Array.from(
-          new Set(
-            Object.values(SEMANTIC_LABELS).flatMap((label) => label.decorations)
-          )
-        ).map((decoration) => (
-          <button
-            key={decoration}
-            className={activeDecorations.includes(decoration) ? 'active' : ''}
-            onClick={() => handleDecorationClick(decoration)}
-            disabled={!validDecorations.has(decoration)}
-          >
-            {decoration}
-          </button>
-        ))}
-      </div>
+    <div className={`conv-comment-root ${className}`} {...props}>
+      <div className="row-container">{SEMANTIC_LABELS_PRIORITIES.map(renderLabelButton)}</div>
+      <div className="row-container">{DECORATIONS_PRIORITIES.map(renderDecorationButton)}</div>
     </div>
   )
 }

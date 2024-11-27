@@ -9,11 +9,20 @@ const initializeSemanticButtons = (targetNode) => {
     return
   }
   targetNode.dataset.semanticButtonInitialized = 'true'
-  
+
   const semanticContainer = targetNode.closest('div')
-  ReactDOM.createRoot(semanticContainer).render(
-    <SemanticAndDecorationButtons textareaRef={{ current: targetNode }} />
-  )
+  if (semanticContainer) {
+    // Create a new container for the React root
+    const reactRootContainer = document.createElement('div')
+
+    // Append the new container to the semanticContainer
+    semanticContainer.appendChild(reactRootContainer)
+
+    // Render the React component into the new container
+    ReactDOM.createRoot(reactRootContainer).render(
+      <SemanticAndDecorationButtons textareaRef={{ current: targetNode }} />
+    )
+  }
 }
 
 // Observe DOM mutations
@@ -38,20 +47,3 @@ observer.observe(document.body, {
   childList: true,
   subtree: true,
 })
-
-// Initial run for existing elements
-// document
-//   .querySelectorAll(
-//     '#note_note:not([data-semantic-button-initialized]), #note-body:not([data-semantic-button-initialized]), #review-note-body:not([data-semantic-button-initialized])'
-//   )
-//   .forEach(initializeSemanticButtons)
-//
-//
-// setInterval(function () {
-//   console.debug(`${LOG_TAG}-interval`)
-//   document
-//     .querySelectorAll(
-//       '#note_note:not([data-semantic-button-initialized]), #note-body:not([data-semantic-button-initialized]), #review-note-body:not([data-semantic-button-initialized])'
-//     )
-//     .forEach(initializeSemanticButtons)
-// }, 500)

@@ -196,15 +196,6 @@ var options = {
         },
       ],
     }),
-    new CopyWebpackPlugin({
-      patterns: [
-        {
-          from: 'src/content-scripts/index.css',
-          to: path.join(__dirname, 'build/index.css'),
-          force: true,
-        },
-      ],
-    }),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'src', 'components', 'index.html'),
       filename: 'popup.html',

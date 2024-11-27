@@ -1,75 +1,123 @@
-const DECORATIONS = Object.freeze({
-  BLOCKING: { content: 'blocking', tooltip: 'Prevents acceptance until resolved.' },
-  NON_BLOCKING: { content: 'non-blocking', tooltip: 'Does not prevent acceptance.' },
-  IF_MINOR: { content: 'if-minor', tooltip: 'Resolve only if change is minor.' },
-  UNIT_TEST: { content: 'unit-test', tooltip: 'Related to unit tests.' },
-  PERFORMANCE: { content: 'performance', tooltip: 'Related to performance.' },
-})
+const SEMANTIC_COMMENT_PREFIX_REGEX_PATTERN = /\*\*(\w+)\s*(?:\(\s*([^)]+?)\s*\))?:\s*\*\*/
 
-const SEMANTIC_LABELS = Object.freeze({
-  NITPICK: {
+// Keys -----
+const LABEL_KEY = {
+  NITPICK: 'NITPICK',
+  SUGGESTION: 'SUGGESTION',
+  ISSUE: 'ISSUE',
+  QUESTION: 'QUESTION',
+  THOUGHT: 'THOUGHT',
+  PRAISE: 'PRAISE',
+  CHORE: 'CHORE',
+}
+
+const DECORATION_KEY = {
+  BLOCKING: 'BLOCKING',
+  NON_BLOCKING: 'NON_BLOCKING',
+  IF_MINOR: 'IF_MINOR',
+  UNIT_TEST: 'UNIT_TEST',
+  PERFORMANCE: 'PERFORMANCE',
+}
+
+// Values ------------------------
+
+const DECORATIONS = {
+  [DECORATION_KEY.BLOCKING]: {
+    key: DECORATION_KEY.BLOCKING,
+    content: 'blocking',
+    tooltip: 'Prevents acceptance until resolved.',
+  },
+  [DECORATION_KEY.NON_BLOCKING]: {
+    key: DECORATION_KEY.NON_BLOCKING,
+    content: 'non-blocking',
+    tooltip: 'Does not prevent acceptance.',
+  },
+  [DECORATION_KEY.IF_MINOR]: {
+    key: DECORATION_KEY.IF_MINOR,
+    content: 'if-minor',
+    tooltip: 'Resolve only if change is minor.',
+  },
+  [DECORATION_KEY.UNIT_TEST]: {
+    key: DECORATION_KEY.UNIT_TEST,
+    content: 'unit-test',
+    tooltip: 'Related to unit tests.',
+  },
+  [DECORATION_KEY.PERFORMANCE]: {
+    key: DECORATION_KEY.PERFORMANCE,
+    content: 'performance',
+    tooltip: 'Related to performance.',
+  },
+}
+
+const LABELS = {
+  [LABEL_KEY.NITPICK]: {
+    key: LABEL_KEY.NITPICK,
     content: 'nitpick',
-    decorations: new Set([DECORATIONS.BLOCKING.content, DECORATIONS.NON_BLOCKING.content, DECORATIONS.PERFORMANCE.content]),
+    decorationKeys: [DECORATION_KEY.BLOCKING, DECORATION_KEY.NON_BLOCKING, DECORATION_KEY.PERFORMANCE],
     tooltip: 'Small, necessary changes.',
   },
-  SUGGESTION: {
+  [LABEL_KEY.SUGGESTION]: {
+    key: LABEL_KEY.SUGGESTION,
     content: 'suggestion',
-    decorations: new Set([DECORATIONS.NON_BLOCKING.content, DECORATIONS.UNIT_TEST.content]),
+    decorationKeys: [DECORATION_KEY.NON_BLOCKING, DECORATION_KEY.UNIT_TEST],
     tooltip: 'Proposes improvements for clarity.',
   },
-  ISSUE: {
+  [LABEL_KEY.ISSUE]: {
+    key: LABEL_KEY.ISSUE,
     content: 'issue',
-    decorations: new Set([DECORATIONS.BLOCKING.content, DECORATIONS.PERFORMANCE.content]),
+    decorationKeys: [DECORATION_KEY.BLOCKING, DECORATION_KEY.PERFORMANCE],
     tooltip: 'Highlights problems needing resolution.',
   },
-  QUESTION: {
+  [LABEL_KEY.QUESTION]: {
+    key: LABEL_KEY.QUESTION,
     content: 'question',
-    decorations: new Set([DECORATIONS.NON_BLOCKING.content, DECORATIONS.PERFORMANCE.content]),
+    decorationKeys: [DECORATION_KEY.NON_BLOCKING, DECORATION_KEY.PERFORMANCE],
     tooltip: 'Requests clarification.',
   },
-  THOUGHT: {
+  [LABEL_KEY.THOUGHT]: {
+    key: LABEL_KEY.THOUGHT,
     content: 'thought',
-    decorations: new Set([DECORATIONS.BLOCKING.content, DECORATIONS.NON_BLOCKING.content]),
+    decorationKeys: [DECORATION_KEY.BLOCKING, DECORATION_KEY.NON_BLOCKING],
     tooltip: 'Non-blocking idea for exploration.',
   },
-  PRAISE: {
+  [LABEL_KEY.PRAISE]: {
+    key: LABEL_KEY.PRAISE,
     content: 'praise',
-    decorations: new Set([DECORATIONS.NON_BLOCKING.content, DECORATIONS.UNIT_TEST.content]),
+    decorationKeys: [DECORATION_KEY.NON_BLOCKING, DECORATION_KEY.UNIT_TEST],
     tooltip: 'Recognizes positive contributions.',
   },
-  CHORE: {
+  [LABEL_KEY.CHORE]: {
+    key: LABEL_KEY.CHORE,
     content: 'chore',
-    decorations: new Set([DECORATIONS.BLOCKING.content, DECORATIONS.NON_BLOCKING.content, DECORATIONS.IF_MINOR.content]),
+    decorationKeys: [DECORATION_KEY.BLOCKING, DECORATION_KEY.NON_BLOCKING, DECORATION_KEY.IF_MINOR],
     tooltip: 'Routine tasks before acceptance.',
   },
-})
+}
 
+// Others-----
 const SEMANTIC_LABELS_PRIORITIES = [
-  SEMANTIC_LABELS.NITPICK,
-  SEMANTIC_LABELS.SUGGESTION,
-  SEMANTIC_LABELS.ISSUE,
-  SEMANTIC_LABELS.QUESTION,
-  SEMANTIC_LABELS.THOUGHT,
-  SEMANTIC_LABELS.PRAISE,
-  SEMANTIC_LABELS.CHORE,
+  LABEL_KEY.NITPICK,
+  LABEL_KEY.SUGGESTION,
+  LABEL_KEY.ISSUE,
+  LABEL_KEY.QUESTION,
+  LABEL_KEY.THOUGHT,
+  LABEL_KEY.PRAISE,
+  LABEL_KEY.CHORE,
 ]
 
 const DECORATIONS_PRIORITIES = [
-  DECORATIONS.BLOCKING,
-  DECORATIONS.NON_BLOCKING,
-  DECORATIONS.IF_MINOR,
-  DECORATIONS.UNIT_TEST,
-  DECORATIONS.PERFORMANCE,
+  DECORATION_KEY.BLOCKING,
+  DECORATION_KEY.NON_BLOCKING,
+  DECORATION_KEY.IF_MINOR,
+  DECORATION_KEY.UNIT_TEST,
+  DECORATION_KEY.PERFORMANCE,
 ]
-
-const SEMANTIC_COMMENT_PREFIX_REGEX_PATTERN = /\*\*(\w+)\s*(?:\(\s*([^)]+?)\s*\))?:\s*\*\*/
-const ELEMENT_ROOT_ID = 'conv-comment-root'
 
 export {
   SEMANTIC_COMMENT_PREFIX_REGEX_PATTERN,
-  ELEMENT_ROOT_ID,
   DECORATIONS_PRIORITIES,
   SEMANTIC_LABELS_PRIORITIES,
-  SEMANTIC_LABELS,
+  LABELS,
   DECORATIONS,
+  LABEL_KEY,
 }

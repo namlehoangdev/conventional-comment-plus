@@ -8,7 +8,7 @@
     "activeTab",
     "storage",
     "declarativeNetRequestWithHostAccess",
-    "https://gitlab.myteksi.net/*"
+    "https://gitlab.com/*"
   ],
   "host_permissions": [
     "<all_urls>"
@@ -37,13 +37,10 @@
   "content_scripts": [
     {
       "matches": [
-        "https://gitlab.myteksi.net/*"
+        "https://gitlab.com/*"
       ],
       "js": [
         "content_script.bundle.js"
-      ],
-      "css": [
-        "index.css"
       ],
       "run_at": "document_idle"
     }
