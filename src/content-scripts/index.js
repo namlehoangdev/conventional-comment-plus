@@ -1,11 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { ThemeUIProvider } from 'theme-ui'
+import { LOG_TAG } from 'constants'
 import SemanticAndDecorationButtons from './semantic-component/SemanticComponent'
 import { theme } from '../theme'
-import { ThemeUIProvider } from 'theme-ui'
 
 function initializeSemanticButtons(targetNode) {
-  console.log('Initializing Semantic Buttons for:', targetNode)
+  console.debug('Initializing Semantic Buttons for: ', targetNode)
 
   if (targetNode.dataset.semanticButtonInitialized === 'true') {
     return
@@ -30,7 +31,7 @@ function initializeSemanticButtons(targetNode) {
 }
 
 const observer = new MutationObserver((mutations) => {
-  console.log('DOM Mutated')
+  console.debug(`${LOG_TAG} DOM Mutation Observed`)
   mutations.forEach((mutation) => {
     mutation.addedNodes.forEach((node) => {
       if (
@@ -46,7 +47,4 @@ const observer = new MutationObserver((mutations) => {
 })
 
 // Start observing the document
-observer.observe(document.body, {
-  childList: true,
-  subtree: true,
-})
+observer.observe(document.body, { childList: true, subtree: true })

@@ -1,5 +1,14 @@
-import { ColorModes } from './colorMode'
+import { COLOR_MODE_STORAGE_ITEM, ColorModes } from './colorMode'
+import { DECORATIONS, DECORATIONS_PRIORITIES, LABELS, SEMANTIC_LABELS_PRIORITIES } from './conventionalComments'
 
-const LOG_TAG = 'CCP'
+const LOG_TAG = '[ConventionalCommentPlus]'
 
-export { LOG_TAG, ColorModes }
+export {
+  LOG_TAG,
+  ColorModes,
+  COLOR_MODE_STORAGE_ITEM,
+  DECORATIONS,
+  DECORATIONS_PRIORITIES,
+  LABELS,
+  SEMANTIC_LABELS_PRIORITIES,
+}

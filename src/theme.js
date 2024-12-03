@@ -3,6 +3,7 @@ export const theme = {
     initialColorModeName: 'light',
     useColorSchemeMediaQuery: false,
     useCustomProperties: false,
+    useLocalStorage: true,
   },
   breakpoints: ['40em', '52em', '64em'],
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
@@ -24,7 +25,7 @@ export const theme = {
   colors: {
     text: '#2D2D2D', // Softer black for text
     background: '#F9FAFB', // Light grey for a gentle background
-    primary: '#0056B3', // Slightly darker blue for better contrast
+    primary: '#1F74C8', // Slightly darker blue for better contrast
     disabled: '#A8A8A8', // Subdued grey for disabled elements
     modes: {
       dark: {

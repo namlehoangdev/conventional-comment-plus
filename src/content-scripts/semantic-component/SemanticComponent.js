@@ -1,111 +1,134 @@
-import React, { useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import './SemanticComponent.scss'
-
-import {
-  DECORATIONS,
-  DECORATIONS_PRIORITIES,
-  LABELS,
-  SEMANTIC_LABELS_PRIORITIES,
-} from '../../constants/conventionalComments.js'
-import { genNewData, retrieveConventionalPrefix } from '../../utils/semantic'
 import { Box, useColorMode } from 'theme-ui'
+import { ColorModes, DECORATIONS, DECORATIONS_PRIORITIES, LABELS, LOG_TAG, SEMANTIC_LABELS_PRIORITIES } from 'constants'
+import { checkModeByElementBackground, genNewData, retrieveConventionalPrefix } from 'utils'
 import ChildButton from './ChildButton/ChildButton'
 
-export default function SemanticAndDecorationButtons({ test, className, textareaRef, ...props }) {
-  const [colorMode, setColorMode] = useColorMode()
+const SemanticLabels = LABELS
+const Decorations = DECORATIONS
+const LabelPriorityOrder = SEMANTIC_LABELS_PRIORITIES
+const DecorationPriorityOrder = DECORATIONS_PRIORITIES
+
+const updateTextArea = (textareaElement, text) => {
+  if (!textareaElement) return
+  textareaElement.value = text
+  textareaElement.focus()
+}
+
+export default function SemanticAndDecorationButtons({ test, textareaRef, ...props }) {
   const [activeLabelKey, setActiveLabelKey] = useState(null)
-  const [activeDecorationKeys, setActiveDecorationKeys] = useState([])
+  const [activeDecorationKeys, setActiveDecorationKeys] = useState(new Set())
   const validDecorationKeys = new Set(LABELS[activeLabelKey]?.decorationKeys || [])
+  const textareaElement = textareaRef?.current
 
-  const currentTextarea = textareaRef ? textareaRef.current : null
+  const [colorMode, setColorMode] = useColorMode(ColorModes.DEFAULT_LIGHT)
 
-  function handleLabelClick(event, labelKey, value) {
-    event.preventDefault()
-    if (activeLabelKey === labelKey && labelKey?.length > 0 && currentTextarea) {
-      setActiveLabelKey(null)
-      setActiveDecorationKeys([])
-      updateTextArea('')
-      return
+  useEffect(() => {
+    if (textareaElement) {
+      const elemColorMode = checkModeByElementBackground(textareaElement)
+      if (!elemColorMode) {
+        return
+      }
+
+      if (elemColorMode !== colorMode) {
+        console.debug(`${LOG_TAG} Auto change colorMode from ${colorMode} to ${elemColorMode}`)
+        setColorMode(elemColorMode)
+      }
     }
+  }, [textareaElement, colorMode])
 
-    if (currentTextarea) {
-      const currentText = currentTextarea.value.trim()
-      const prefixData = retrieveConventionalPrefix(currentText)
-      const { text, decorations, label } = genNewData(currentText, prefixData, labelKey, '')
+  // Handle the label click event
+  const onLabelClick = useCallback(
+    (event, labelKey) => {
+      event.preventDefault()
+      if (activeLabelKey === labelKey && labelKey?.length > 0 && textareaElement) {
+        setActiveLabelKey(null)
+        setActiveDecorationKeys(new Set())
+        updateTextArea(textareaElement, '')
+        return
+      }
 
-      setActiveLabelKey(label.key)
-      setActiveDecorationKeys(decorations.map((obj) => obj.key))
+      if (textareaElement) {
+        const currentText = textareaElement.value.trim()
+        const prefixData = retrieveConventionalPrefix(currentText)
+        const { text, decorations, label } = genNewData(currentText, prefixData, labelKey, '')
 
-      updateTextArea(text)
-    }
-  }
+        setActiveLabelKey(label.key || null)
+        setActiveDecorationKeys(new Set(decorations.map((obj) => obj.key)))
+        updateTextArea(textareaElement, text)
+      }
+    },
+    [activeLabelKey, textareaElement]
+  )
 
-  function handleDecorationClick(event, decoKey, value) {
-    event.preventDefault()
-    if (currentTextarea) {
-      const currentText = currentTextarea.value.trim()
-      const prefixData = retrieveConventionalPrefix(currentText)
+  // Handle decoration click event
+  const onDecorationClick = useCallback(
+    (event, decoKey) => {
+      event.preventDefault()
+      if (textareaElement) {
+        const currentText = textareaElement.value.trim()
+        const prefixData = retrieveConventionalPrefix(currentText)
+        const { text, decorations, label } = genNewData(currentText, prefixData, activeLabelKey, decoKey)
 
-      const { text, decorations, label } = genNewData(currentText, prefixData, activeLabelKey, decoKey)
+        setActiveLabelKey(label?.key)
+        setActiveDecorationKeys(new Set(decorations.map((obj) => obj.key)))
+        updateTextArea(textareaElement, text)
+      }
+    },
+    [activeLabelKey, textareaElement]
+  )
 
-      setActiveLabelKey(label?.key)
-      setActiveDecorationKeys(decorations.map((obj) => obj.key))
+  // Render label buttons
+  const renderLabelButton = useCallback(
+    (key) => {
+      const label = SemanticLabels[key]
+      const active = label && activeLabelKey === key
+      const disabled = !label
+      return (
+        <ChildButton
+          key={key}
+          active={active}
+          up={true}
+          disabled={disabled}
+          title={label?.tooltip}
+          onClick={(e) => onLabelClick(e, key)}
+        >
+          {label?.content}
+        </ChildButton>
+      )
+    },
+    [activeLabelKey, onLabelClick]
+  )
 
-      updateTextArea(text)
-    }
-  }
+  // Render decoration buttons
+  const renderDecorationButton = useCallback(
+    (key) => {
+      const decoration = Decorations[key]
+      const active = activeDecorationKeys.has(key)
+      const disabled = !validDecorationKeys.has(key)
+      return (
+        <ChildButton
+          key={key}
+          up={false}
+          active={active}
+          disabled={disabled}
+          title={decoration?.tooltip}
+          onClick={(e) => onDecorationClick(e, key)}
+        >
+          {decoration?.content}
+        </ChildButton>
+      )
+    },
+    [activeDecorationKeys, onDecorationClick, validDecorationKeys]
+  )
 
-  function updateTextArea(text) {
-    currentTextarea.value = text
-    currentTextarea.focus()
-    currentTextarea.dispatchEvent(new Event('input', { bubbles: true }))
-  }
+  const visibilityStyle = test ? { opacity: 1 } : undefined
 
-  function renderLabelButton(key) {
-    const label = LABELS[key]
-    const active = label && activeLabelKey === key
-    const disabled = false
-    return (
-      <ChildButton
-        key={key}
-        active={active}
-        up={true}
-        disabled={disabled}
-        title={label?.tooltip}
-        onClick={(e) => handleLabelClick(e, key, label)}
-      >
-        {label?.content}
-      </ChildButton>
-    )
-  }
-
-  function renderDecorationButton(key) {
-    const decoration = DECORATIONS[key]
-    const active = activeDecorationKeys.includes(key)
-    const disabled = !validDecorationKeys.has(key)
-    return (
-      <ChildButton
-        key={key}
-        active={active}
-        up={false}
-        disabled={disabled}
-        title={decoration?.tooltip}
-        onClick={(e) => handleDecorationClick(e, key, decoration)}
-      >
-        {decoration?.content}
-      </ChildButton>
-    )
-  }
-
-  const testStyle = test ? { opacity: 1 } : undefined
   return (
-    <Box {...props} className={`conv-comment-root-${colorMode} ${className}`} style={testStyle}>
-      <Box key={'labels'} className={'row-container'}>
-        {SEMANTIC_LABELS_PRIORITIES.map(renderLabelButton)}
-      </Box>
-      <Box key={'labels'} className={'row-container'}>
-        {DECORATIONS_PRIORITIES.map(renderDecorationButton)}
-      </Box>
+    <Box {...props} className={`conv-comment-root-${colorMode}`} style={visibilityStyle}>
+      <Box className={'row-container'}>{LabelPriorityOrder.map(renderLabelButton)}</Box>
+      <Box className={'row-container'}>{DecorationPriorityOrder.map(renderDecorationButton)}</Box>
     </Box>
   )
 }

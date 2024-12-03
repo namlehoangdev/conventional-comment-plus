@@ -11,6 +11,9 @@
   opacity: 1;
   width: 30px;
   height: 30px;
+  min-width: 30px;
+  min-height: 30px;
+
   overflow: auto;
   transition: all 0.18s ease-in-out;
   padding-left: 20px;
@@ -23,10 +26,11 @@
   &::after {
     content: " ";
     display: inline-block;
+    background-size: contain;
     background-repeat: no-repeat;
-    background-size: cover;
-    background-image: url("../../assets/icons/logo.svg");
     position: absolute;
+
+
     top: 0;
     left: 0;
     right: 0;
@@ -44,49 +48,22 @@
     .row-container {
       opacity: 1;
       transition: none;
-      overflow: visible;
-      position: relative;
     }
 
     &::after {
-      display: none;
     }
   }
 }
 
-
+// Specific overrides for light and dark themes
 .conv-comment-root-light {
-  @extend .conv-comment-root;
-
   &::after {
-    content: " ";
-    display: inline-block;
-    background-repeat: no-repeat;
-    background-size: cover;
     background-image: url("../../assets/icons/iconMinimalLight.svg");
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
   }
 }
 
 .conv-comment-root-dark {
-  @extend .conv-comment-root;
-
   &::after {
-    content: " ";
-    display: inline-block;
-    background-repeat: no-repeat;
-    background-size: cover;
     background-image: url("../../assets/icons/iconMinimalDark.svg");
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
   }
-
 }
-

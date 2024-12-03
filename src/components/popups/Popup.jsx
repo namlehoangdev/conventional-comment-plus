@@ -8,23 +8,27 @@ import Footer from '../footers/Footer'
 import Header from '../headers/Header'
 import Option from '../Options/Option'
 
+const TESTING = false
+
 function Popup() {
   const textAreaRef = useRef(null)
-  const [colorMode, setColorMode] = useColorMode(ColorModes.DEFAULT_LIGHT)
-  const test = false
+  const [colorMode, setColorMode] = useColorMode()
 
   function handleGitPlatformChange(event) {}
 
   function handleThemeChange(event) {
-    event.preventDefault()
-    const newMode = colorMode === ColorModes.DEFAULT_LIGHT ? ColorModes.DEFAULT_DARK : ColorModes.DEFAULT_LIGHT
-    setColorMode(newMode)
+    const newColor = colorMode === ColorModes.DEFAULT_LIGHT ? ColorModes.DEFAULT_DARK : ColorModes.DEFAULT_LIGHT
+    setColorMode(newColor)
   }
 
   function renderTestArea() {
     return (
       <>
-        {renderThemeButton()}
+        <Option title="Change theme" description="Manually change theme (Github/Gitlab) if autodetect not working">
+          <Box sx={{ mt: '10px' }}>
+            <Switch label="Dark mode?" checked={colorMode === ColorModes.DEFAULT_DARK} onChange={handleThemeChange} />
+          </Box>
+        </Option>
         <Divider />
         <textarea
           ref={textAreaRef}
@@ -35,16 +39,6 @@ function Popup() {
         />
         <SemanticAndDecorationButtons test={false} textareaRef={textAreaRef} style={{ marginBottom: '20px' }} />
       </>
-    )
-  }
-
-  function renderThemeButton() {
-    return (
-      <Option title="Change theme" description="Manually change theme (Github/Gitlab) if autodetect not working">
-        <Box sx={{ mt: '10px' }}>
-          <Switch label="Dark mode?" checked={colorMode === ColorModes.DEFAULT_DARK} onChange={handleThemeChange} />
-        </Box>
-      </Option>
     )
   }
 
@@ -76,17 +70,14 @@ function Popup() {
             </option>
           </Select>
         </Option>
-        {renderThemeButton()}
       </>
     )
   }
 
   return (
-    <Box sx={{ p: '20px', width: 'auto', minWidth: test ? '2000px' : '380px' }}>
+    <Box sx={{ p: '20px', width: 'auto', minWidth: TESTING ? '2000px' : '380px' }}>
       <Header />
-
-      {test ? renderTestArea() : renderContent()}
-
+      {TESTING ? renderTestArea() : renderContent()}
       <Footer />
     </Box>
   )
