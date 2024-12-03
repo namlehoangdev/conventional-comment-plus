@@ -1,8 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import SemanticAndDecorationButtons from './semantic-component/SemanticComponent'
+import { theme } from '../theme'
+import { ThemeUIProvider } from 'theme-ui'
 
-const initializeSemanticButtons = (targetNode) => {
+function initializeSemanticButtons(targetNode) {
   console.log('Initializing Semantic Buttons for:', targetNode)
 
   if (targetNode.dataset.semanticButtonInitialized === 'true') {
@@ -20,12 +22,13 @@ const initializeSemanticButtons = (targetNode) => {
 
     // Render the React component into the new container
     ReactDOM.createRoot(reactRootContainer).render(
-      <SemanticAndDecorationButtons textareaRef={{ current: targetNode }} />
+      <ThemeUIProvider theme={theme}>
+        <SemanticAndDecorationButtons textareaRef={{ current: targetNode }} />
+      </ThemeUIProvider>
     )
   }
 }
 
-// Observe DOM mutations
 const observer = new MutationObserver((mutations) => {
   console.log('DOM Mutated')
   mutations.forEach((mutation) => {

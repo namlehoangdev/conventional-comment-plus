@@ -1,8 +1,8 @@
 import React from 'react'
 import { Box, Flex, Image } from 'theme-ui'
-import logo from '../../assets/icons/logo.svg'
+import logo from '../../assets/icons/icon128'
 
-const Header = () => {
+function Header(props) {
   return (
     <Flex
       sx={{
@@ -11,8 +11,6 @@ const Header = () => {
         fontWeight: 'bold',
         justifyContent: 'space-between',
         alignItems: 'center',
-        borderBottom: '1px solid',
-        borderColor: 'borderGrey',
       }}
     >
       <Flex sx={{ gap: '8px', alignItems: 'center' }}>

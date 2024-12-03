@@ -1,5 +1,5 @@
 import React from 'react'
-import { Flex, Box, Switch } from 'theme-ui'
+import { Box, Flex, Switch } from 'theme-ui'
 
 export default function Option({ title, description, onChange, checked, showDescription, children }) {
   return (
@@ -26,8 +26,6 @@ const styles = {
     mt: showDescription ? '14px' : null,
     pb: showDescription ? null : '14px',
     mb: showDescription ? null : '14px',
-    borderBottom: showDescription ? null : '1px solid',
-    borderColor: showDescription ? null : 'borderGrey',
   }),
   title: {
     fontWeight: 'bold',
@@ -54,5 +52,3 @@ const styles = {
     mt: '6px',
   },
 }
-
-

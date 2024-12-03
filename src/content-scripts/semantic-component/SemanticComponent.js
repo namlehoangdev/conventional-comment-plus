@@ -19,7 +19,8 @@ export default function SemanticAndDecorationButtons({ test, className, textarea
 
   const currentTextarea = textareaRef ? textareaRef.current : null
 
-  function handleLabelClick(labelKey, value) {
+  function handleLabelClick(event, labelKey, value) {
+    event.preventDefault()
     if (activeLabelKey === labelKey && labelKey?.length > 0 && currentTextarea) {
       setActiveLabelKey(null)
       setActiveDecorationKeys([])
@@ -39,7 +40,8 @@ export default function SemanticAndDecorationButtons({ test, className, textarea
     }
   }
 
-  const handleDecorationClick = (decoKey, value) => {
+  function handleDecorationClick(event, decoKey, value) {
+    event.preventDefault()
     if (currentTextarea) {
       const currentText = currentTextarea.value.trim()
       const prefixData = retrieveConventionalPrefix(currentText)
@@ -70,7 +72,7 @@ export default function SemanticAndDecorationButtons({ test, className, textarea
         up={true}
         disabled={disabled}
         title={label?.tooltip}
-        onClick={() => handleLabelClick(key, label)}
+        onClick={(e) => handleLabelClick(e, key, label)}
       >
         {label?.content}
       </ChildButton>
@@ -88,7 +90,7 @@ export default function SemanticAndDecorationButtons({ test, className, textarea
         up={false}
         disabled={disabled}
         title={decoration?.tooltip}
-        onClick={() => handleDecorationClick(key, decoration)}
+        onClick={(e) => handleDecorationClick(e, key, decoration)}
       >
         {decoration?.content}
       </ChildButton>

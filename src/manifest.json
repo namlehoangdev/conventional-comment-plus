@@ -8,8 +8,7 @@
     "activeTab",
     "storage",
     "declarativeNetRequestWithHostAccess",
-    "*://*.gitlab.com/*",
-    "*://gitlab.*/*"
+    "<all_urls>"
   ],
   "host_permissions": [
     "<all_urls>"
@@ -38,7 +37,7 @@
   "content_scripts": [
     {
       "matches": [
-        "https://gitlab.com/*"
+        "<all_urls>"
       ],
       "js": [
         "content_script.bundle.js"
