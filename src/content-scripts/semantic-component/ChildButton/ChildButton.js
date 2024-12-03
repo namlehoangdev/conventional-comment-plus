@@ -1,14 +1,12 @@
-import { Button } from 'theme-ui'
 import React from 'react'
-import './ChildButton.scss'
+import { Button } from 'theme-ui'
 
-export default function ChildButton({ up, children, title, active, ...props }) {
-  function getVariant(active) {
-    return active ? 'active' : 'primary'
-  }
+export default function ChildButton({ children, active = false, ...props }) {
+  // Directly use the variant value in JSX
+  const variant = active ? 'active' : 'primary'
 
   return (
-    <Button {...props} className={'child-button'} variant={getVariant(active)} data-tooltip={title}>
+    <Button {...props} variant={variant}>
       {children}
     </Button>
   )

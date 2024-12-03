@@ -18,6 +18,19 @@ function Footer(props) {
         <NavLink href={`mailto:${ExtensionInfo.CONTACT_EMAIL}`} target="_blank" variant="footer">
           Email
         </NavLink>
+        <script
+          data-coffee-color="#ffffff"
+          data-color="#FFDD00"
+          data-emoji="☕"
+          data-font="Cookie"
+          data-font-color="#000000"
+          data-name="bmc-button"
+          data-outline-color="#000000"
+          data-slug="namlehoangdev"
+          data-text="Buy me a coffee"
+          src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js"
+          type="text/javascript"
+        />
       </Flex>
     </Flex>
   )
