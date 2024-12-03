@@ -1,28 +1,31 @@
-/* Base styles for the entire convCommentRoot */
 .conv-comment-root {
   * {
     display: flex;
     transition: all 0.3s ease-in-out;
   }
 
-  /* Block: conv-comment-root */
   align-items: flex-end;
   position: absolute;
   bottom: 0;
   left: 0;
   opacity: 1;
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   overflow: auto;
   transition: all 0.18s ease-in-out;
   padding-left: 20px;
 
+  .row-container {
+    opacity: 0;
+    transition: none;
+  }
+
   &::after {
     content: " ";
     display: inline-block;
-    background-size: contain;
     background-repeat: no-repeat;
-    background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='180'%20height='180'%20viewBox='0%200%20180%20180'%3E%3Cg%20transform='translate(0%20180)%20scale(.1%20-.1)'%3E%3Cpath%20fill='%237E7D82'%20d='m367%201773c-4-3-7-97-7-207l-1-201%2058-115c32-63%2061-116%2066-118%204-2%207-9%207-15%200-15%20120-232%20198-356%2036-58%2077-128%2092-155%2057-109%20105-186%20115-186s33%2038%2091%20150c18%2036%2060%20108%2093%20160%2058%2092%20241%20416%20241%20426%200%202%2025%2050%2055%20106l55%20101v196c0%20187-5%20221-30%20221-3%200-21-29-40-64-37-69-32-66-233-155-68-31-71-31-236-31h-167l-129%2059-130%2058-40%2067c-40%2066-46%2072-58%2059zm543-710c0-5%2021-31%2048-60%2058-63%2095-113%2084-113-4%200-13%205-18%2010-11%2011-30-104-41-252l-6-78h-81-82l-18%20148c-9%2081-20%20163-23%20183-4%2032%200%2041%2046%2094%2028%2032%2051%2062%2051%2067%200%204%209%208%2020%208s20-3%2020-7z'/%3E%3Cpath%20fill='%237E7D82'%20d='m241%201218c-83-112-111-199-111-344%200-150%2039-249%20149-379%2096-112%2096-211%200-299-62-58-49-97%2039-115%20149-31%20283%201%20372%2087%2012%2013%2017%205%2037-59%2021-72%2049-109%2079-109%208%200%2081%2068%20162%20151l147%20150%2075%2015c200%2039%20374%20192%20444%20389%2010%2028%2020%2093%2023%20145%205%2078%202%20110-16%20175-46%20166-162%20297-201%20226-15-29-13-34%2021-77%2074-92%20116-238%20101-351l-7-53-200-161c-110-88-211-170-225-182s-34-27-46-32c-11-6-72-64-135-130-63-67-118-122-124-123-11-2-17%2016-44%20136-11%2046-27%2092-37%20103-20%2022-53%2025-74%206-12-10-12-9-1%205%2011%2015-14%2038-213%20198l-225%20182-7%2054c-14%20117%2026%20255%2099%20342%2042%2050%2042%2050%2021%2080-26%2038-59%2028-103-30z'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: cover;
+    background-image: url("../../assets/icons/logo.svg");
     position: absolute;
     top: 0;
     left: 0;
@@ -30,83 +33,60 @@
     bottom: 0;
   }
 
+
   &:hover {
     opacity: 1;
-    height: 4rem;
-    width: 1000px;
+    height: auto;
+    width: auto;
     padding-left: 0;
+
+
+    .row-container {
+      opacity: 1;
+      transition: none;
+      overflow: visible;
+      position: relative;
+    }
 
     &::after {
       display: none;
     }
   }
+}
 
-  /* Button styles */
-  button {
-    margin: 0;
-    border-radius: 0;
-    height: 2rem;
-    width: auto;
-    transition: all 0.1s ease-in-out;
-    outline: none;
-    box-shadow: none;
-    color: #333137;
-    border: 0;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    text-align: center;
 
-    &:first-child {
-      border-top-left-radius: 5px;
-      border-bottom-left-radius: 5px;
-    }
+.conv-comment-root-light {
+  @extend .conv-comment-root;
 
-    &:last-child {
-      border-top-right-radius: 5px;
-      border-bottom-right-radius: 5px;
-    }
-
-    &.active {
-      color: #333137; /* Change text color on active */
-      background-color: transparent;
-      border: 2px solid #1D6AC4;
-      outline: 2px solid #626168;
-      outline-offset: -5px;
-    }
-
-    &:disabled {
-      background-color: #EEEEEE; /* Make button look inactive */
-      color: #737278; /* Change text color to grey */
-      cursor: not-allowed; /* Show that it's not clickable */
-      border-color: #dcdcde; /* Optional: change border color */
-    }
-
-    &:enabled:not(.active) {
-      background-color: transparent;
-      color: #333137;
-      border-color: #626168;
-      cursor: pointer;
-    }
-
-    &:focus {
-      /* Add focus styles if needed */
-    }
-  }
-
-  /* Semantic button container */
-  .semantic-buttons-container {
-    flex-direction: row;
-    overflow: auto;
-
-    &:hover {
-      /* Add hover styles if needed */
-    }
-  }
-
-  /* Decoration button container */
-  .decoration-buttons-container {
-    flex-direction: row;
-    overflow: auto;
+  &::after {
+    content: " ";
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url("../../assets/icons/iconMinimalLight.svg");
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
   }
 }
+
+.conv-comment-root-dark {
+  @extend .conv-comment-root;
+
+  &::after {
+    content: " ";
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url("../../assets/icons/iconMinimalDark.svg");
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+}
+

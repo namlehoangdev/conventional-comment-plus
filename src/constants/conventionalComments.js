@@ -26,11 +26,13 @@ const DECORATIONS = {
     key: DECORATION_KEY.BLOCKING,
     content: 'blocking',
     tooltip: 'Prevents acceptance until resolved.',
+    incompatibleWith: [DECORATION_KEY.NON_BLOCKING],
   },
   [DECORATION_KEY.NON_BLOCKING]: {
     key: DECORATION_KEY.NON_BLOCKING,
     content: 'non-blocking',
     tooltip: 'Does not prevent acceptance.',
+    incompatibleWith: [DECORATION_KEY.BLOCKING],
   },
   [DECORATION_KEY.IF_MINOR]: {
     key: DECORATION_KEY.IF_MINOR,
@@ -53,19 +55,30 @@ const LABELS = {
   [LABEL_KEY.NITPICK]: {
     key: LABEL_KEY.NITPICK,
     content: 'nitpick',
-    decorationKeys: [DECORATION_KEY.BLOCKING, DECORATION_KEY.NON_BLOCKING, DECORATION_KEY.PERFORMANCE],
+    decorationKeys: [
+      DECORATION_KEY.BLOCKING,
+      DECORATION_KEY.NON_BLOCKING,
+      DECORATION_KEY.IF_MINOR,
+      DECORATION_KEY.PERFORMANCE,
+    ],
     tooltip: 'Small, necessary changes.',
   },
   [LABEL_KEY.SUGGESTION]: {
     key: LABEL_KEY.SUGGESTION,
     content: 'suggestion',
-    decorationKeys: [DECORATION_KEY.NON_BLOCKING, DECORATION_KEY.UNIT_TEST],
+    decorationKeys: [DECORATION_KEY.NON_BLOCKING, DECORATION_KEY.IF_MINOR, DECORATION_KEY.UNIT_TEST],
     tooltip: 'Proposes improvements for clarity.',
   },
   [LABEL_KEY.ISSUE]: {
     key: LABEL_KEY.ISSUE,
     content: 'issue',
-    decorationKeys: [DECORATION_KEY.BLOCKING, DECORATION_KEY.PERFORMANCE],
+    decorationKeys: [
+      DECORATION_KEY.BLOCKING,
+      DECORATION_KEY.NON_BLOCKING,
+      DECORATION_KEY.IF_MINOR,
+      DECORATION_KEY.UNIT_TEST,
+      DECORATION_KEY.PERFORMANCE,
+    ],
     tooltip: 'Highlights problems needing resolution.',
   },
   [LABEL_KEY.QUESTION]: {
@@ -83,7 +96,7 @@ const LABELS = {
   [LABEL_KEY.PRAISE]: {
     key: LABEL_KEY.PRAISE,
     content: 'praise',
-    decorationKeys: [DECORATION_KEY.NON_BLOCKING, DECORATION_KEY.UNIT_TEST],
+    decorationKeys: [DECORATION_KEY.NON_BLOCKING],
     tooltip: 'Recognizes positive contributions.',
   },
   [LABEL_KEY.CHORE]: {

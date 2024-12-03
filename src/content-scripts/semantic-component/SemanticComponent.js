@@ -8,10 +8,11 @@ import {
   SEMANTIC_LABELS_PRIORITIES,
 } from '../../constants/conventionalComments.js'
 import { genNewData, retrieveConventionalPrefix } from '../../utils/semantic'
+import { Box, useColorMode } from 'theme-ui'
+import ChildButton from './ChildButton/ChildButton'
 
-const activeClassName = 'active'
-
-export default function SemanticAndDecorationButtons({ className, textareaRef, ...props }) {
+export default function SemanticAndDecorationButtons({ test, className, textareaRef, ...props }) {
+  const [colorMode, setColorMode] = useColorMode()
   const [activeLabelKey, setActiveLabelKey] = useState(null)
   const [activeDecorationKeys, setActiveDecorationKeys] = useState([])
   const validDecorationKeys = new Set(LABELS[activeLabelKey]?.decorationKeys || [])
@@ -60,36 +61,49 @@ export default function SemanticAndDecorationButtons({ className, textareaRef, .
 
   function renderLabelButton(key) {
     const label = LABELS[key]
+    const active = label && activeLabelKey === key
+    const disabled = false
     return (
-      <button
+      <ChildButton
         key={key}
-        className={activeLabelKey === key && label ? activeClassName : ''}
+        active={active}
+        up={true}
+        disabled={disabled}
+        title={label?.tooltip}
         onClick={() => handleLabelClick(key, label)}
       >
         {label?.content}
-      </button>
+      </ChildButton>
     )
   }
 
   function renderDecorationButton(key) {
     const decoration = DECORATIONS[key]
-
+    const active = activeDecorationKeys.includes(key)
+    const disabled = !validDecorationKeys.has(key)
     return (
-      <button
+      <ChildButton
         key={key}
-        className={activeDecorationKeys.includes(key) ? activeClassName : ''}
-        disabled={!validDecorationKeys.has(key)}
+        active={active}
+        up={false}
+        disabled={disabled}
+        title={decoration?.tooltip}
         onClick={() => handleDecorationClick(key, decoration)}
       >
         {decoration?.content}
-      </button>
+      </ChildButton>
     )
   }
 
+  const testStyle = test ? { opacity: 1 } : undefined
   return (
-    <div className={`conv-comment-root ${className}`} {...props}>
-      <div className="row-container">{SEMANTIC_LABELS_PRIORITIES.map(renderLabelButton)}</div>
-      <div className="row-container">{DECORATIONS_PRIORITIES.map(renderDecorationButton)}</div>
-    </div>
+    <Box {...props} className={`conv-comment-root-${colorMode} ${className}`} style={testStyle}>
+      <Box key={'labels'} className={'row-container'}>
+        {SEMANTIC_LABELS_PRIORITIES.map(renderLabelButton)}
+      </Box>
+      <Box key={'labels'} className={'row-container'}>
+        {DECORATIONS_PRIORITIES.map(renderDecorationButton)}
+      </Box>
+    </Box>
   )
 }

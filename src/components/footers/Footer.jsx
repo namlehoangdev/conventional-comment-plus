@@ -1,5 +1,5 @@
 import React from 'react'
-import { Flex, Link } from 'theme-ui'
+import { Flex, NavLink } from 'theme-ui'
 
 const Footer = () => {
   return (
@@ -9,23 +9,16 @@ const Footer = () => {
         color: 'darkGrey',
         alignItems: 'center',
         justifyContent: 'center',
+        marginTop: 'auto',
       }}
     >
       <Flex sx={{ justifyContent: 'space-around', width: '100%' }}>
-        <Link
-          href="https://github.com/namlehoangdev/conventional-comment-plus"
-          target="_blank"
-          variant="footer"
-        >
+        <NavLink href="https://github.com/namlehoangdev/conventional-comment-plus" target="_blank" variant="footer">
           Github
-        </Link>
-        <Link
-          href="mailto:contact@namlehoangdev.com"
-          target="_blank"
-          variant="footer"
-        >
+        </NavLink>
+        <NavLink href="mailto:contact@namlehoangdev.com" target="_blank" variant="footer">
           Email
-        </Link>
+        </NavLink>
       </Flex>
     </Flex>
   )

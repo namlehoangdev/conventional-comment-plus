@@ -4,7 +4,7 @@ import { LOG_TAG } from '../constants'
 function retrieveConventionalPrefix(inputString) {
   try {
     const match = inputString.match(SEMANTIC_COMMENT_PREFIX_REGEX_PATTERN)
-    if (match && match.length > 2) {
+    if (match && match?.length > 2) {
       return {
         conventionalPrefix: match[0],
         labelContent: match[1],
@@ -20,7 +20,7 @@ function retrieveConventionalPrefix(inputString) {
 }
 
 function genConventionalCommentPrefix(semanticLabel = '', decorations = []) {
-  const decoStr = decorations && decorations.length > 0 ? `${decorations.join(', ')}` : ''
+  const decoStr = decorations && decorations?.length > 0 ? `${decorations.join(', ')}` : ''
   return `**${semanticLabel}${decoStr ? ` (${decoStr})` : ''}:**`
 }
 
@@ -31,13 +31,13 @@ function genNewData(currentText, prefixData, labelKey = '', decorationKey = '') 
     conventionalPrefix: currentPrefix,
   } = prefixData || {}
 
-  const newLabelContent = labelKey.length > 0 ? LABELS[labelKey]?.content : labelContent
+  const newLabelContent = labelKey?.length > 0 ? LABELS[labelKey]?.content : labelContent
   const label = getObjectByContent(LABELS, newLabelContent)
 
   const validDecorationKeys = label ? new Set(label.decorationKeys) : new Set()
 
   let newDecorationContents =
-    decorationKey.length > 0
+    decorationKey?.length > 0
       ? toggleDecorationContent(currentDecorationContents, DECORATIONS[decorationKey]?.content)
       : currentDecorationContents
 
@@ -57,12 +57,20 @@ function genNewData(currentText, prefixData, labelKey = '', decorationKey = '') 
 
 function toggleDecorationContent(decorationContents = [], decorationContentToToggle = '') {
   let newDecorations = [...decorationContents]
-  if (decorationContentToToggle.length === 0) {
+  if (decorationContentToToggle?.length === 0) {
     return newDecorations
   }
   const index = newDecorations.indexOf(decorationContentToToggle)
   if (index === -1) {
     newDecorations.push(decorationContentToToggle)
+
+    const decorationToToggle = getObjectByContent(DECORATIONS, decorationContentToToggle)
+    const incompatibleDecorations = decorationToToggle?.incompatibleWith || []
+
+    newDecorations = newDecorations.filter(
+      (content) =>
+        !incompatibleDecorations.includes(Object.values(DECORATIONS).find((dec) => dec.content === content)?.key)
+    )
   } else {
     newDecorations.splice(index, 1)
   }
