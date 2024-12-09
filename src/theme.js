@@ -136,5 +136,9 @@ export const theme = {
       textAlign: 'left',
       borderBottomStyle: 'solid',
     },
+    hr: {
+      borderColor: 'disabled',
+      marginY: '5px',
+    },
   },
 }

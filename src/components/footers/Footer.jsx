@@ -1,38 +1,39 @@
 import React from 'react'
-import { Flex, NavLink } from 'theme-ui'
+import { Avatar, Box, Button, Divider, Flex, Label, NavLink } from 'theme-ui'
 import { ExtensionInfo } from '../../constants/extensionInfo'
+import buyMeACoffeeLogo from '../../assets/icons/buyMeACoffee'
+import githubLogo from '../../assets/icons/github'
 
 function Footer(props) {
+  const handleBuyMeACoffeeClick = () => {
+    window.open(ExtensionInfo.BUY_ME_A_COFFEE_LINK, '_blank')
+  }
+
   return (
-    <Flex
+    <Box
       sx={{
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: 'auto',
+        width: '100%',
       }}
     >
-      <Flex sx={{ justifyContent: 'space-around', width: '100%' }}>
+      <Divider sx={{ marginY: '20px' }} />
+      <Flex sx={{ width: '100%', alignItems: 'center', justifyContent: 'space-around' }}>
         <NavLink href={ExtensionInfo.GITHUB_URL} target="_blank" variant="footer">
-          Github
+          <Flex sx={{ alignItems: 'center' }}>
+            <Avatar src={githubLogo} sx={{ minWidth: '30px', minHeight: '30px', marginRight: '5px' }} />
+            <Label>Github</Label>
+          </Flex>
         </NavLink>
-        <NavLink href={`mailto:${ExtensionInfo.CONTACT_EMAIL}`} target="_blank" variant="footer">
-          Email
-        </NavLink>
-        <script
-          data-coffee-color="#ffffff"
-          data-color="#FFDD00"
-          data-emoji="☕"
-          data-font="Cookie"
-          data-font-color="#000000"
-          data-name="bmc-button"
-          data-outline-color="#000000"
-          data-slug="namlehoangdev"
-          data-text="Buy me a coffee"
-          src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js"
-          type="text/javascript"
-        />
+        <Button sx={{ background: '#F7DC4B' }} onClick={handleBuyMeACoffeeClick}>
+          <Flex sx={{ alignItems: 'center' }}>
+            <Avatar src={buyMeACoffeeLogo} sx={{ width: '30px', height: '30px', marginRight: '5px' }} />
+            <Label>Buy me a cofee</Label>
+          </Flex>
+        </Button>
       </Flex>
-    </Flex>
+    </Box>
   )
 }
 
