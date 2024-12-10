@@ -18,18 +18,7 @@ var alias = {}
 // load the secrets
 var secretsPath = path.join(__dirname, 'secrets.' + env.NODE_ENV + '.js')
 
-var fileExtensions = [
-  'jpg',
-  'jpeg',
-  'png',
-  'gif',
-  'eot',
-  'otf',
-  'svg',
-  'ttf',
-  'woff',
-  'woff2',
-]
+var fileExtensions = ['jpg', 'jpeg', 'png', 'gif', 'eot', 'otf', 'svg', 'ttf', 'woff', 'woff2']
 
 // Add this function at the top of your webpack.config.js file
 function combineManifests(commonConfigPath, browserSpecificConfigPath) {
@@ -76,7 +65,7 @@ var options = {
   mode: process.env.NODE_ENV || 'development',
   entry: {
     popup: path.join(__dirname, 'src', 'components', 'index.jsx'),
-    background: path.join(__dirname, 'src', 'backgrounds', 'gitlab.js'),
+    background: path.join(__dirname, 'src', 'backgrounds', 'index.js'),
     content_script: path.join(__dirname, 'src', 'content-scripts', 'index.js'),
   },
   chromeExtensionBoilerplate: {
@@ -131,9 +120,7 @@ var options = {
             loader: require.resolve('ts-loader'),
             options: {
               getCustomTransformers: () => ({
-                before: [isDevelopment && ReactRefreshTypeScript()].filter(
-                  Boolean
-                ),
+                before: [isDevelopment && ReactRefreshTypeScript()].filter(Boolean),
               }),
               transpileOnly: isDevelopment,
             },
@@ -149,9 +136,7 @@ var options = {
           {
             loader: require.resolve('babel-loader'),
             options: {
-              plugins: [
-                isDevelopment && require.resolve('react-refresh/babel'),
-              ].filter(Boolean),
+              plugins: [isDevelopment && require.resolve('react-refresh/babel')].filter(Boolean),
             },
           },
         ],
@@ -161,9 +146,7 @@ var options = {
   },
   resolve: {
     alias: alias,
-    extensions: fileExtensions
-      .map((extension) => '.' + extension)
-      .concat(['.js', '.jsx', '.ts', '.tsx', '.css']),
+    extensions: fileExtensions.map((extension) => '.' + extension).concat(['.js', '.jsx', '.ts', '.tsx', '.css']),
   },
   plugins: [
     isDevelopment && new ReactRefreshWebpackPlugin({ overlay: false }),
