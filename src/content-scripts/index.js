@@ -6,29 +6,13 @@ import SemanticAndDecorationButtons from './semantic-component/SemanticComponent
 import { theme } from '../theme'
 import { isGitlabSite } from '../utils'
 
-function initializeSemanticButtons(targetNode) {
-  console.info(`${LOG_TAG} Initializing Semantic Buttons for 1: `, targetNode)
-
-  if (targetNode.dataset.semanticButtonInitialized === 'true') {
-    return
-  }
-  targetNode.dataset.semanticButtonInitialized = 'true'
-
-  const semanticContainer = targetNode.closest('div')
-  if (semanticContainer) {
-    // Create a new container for the React root
-    const reactRootContainer = document.createElement('div')
-
-    // Append the new container to the semanticContainer
-    semanticContainer.appendChild(reactRootContainer)
-
-    // Render the React component into the new container
-    ReactDOM.createRoot(reactRootContainer).render(
-      <ThemeUIProvider theme={theme}>
-        <SemanticAndDecorationButtons textareaRef={{ current: targetNode }} />
-      </ThemeUIProvider>
-    )
-  }
+function initializeSemanticButtons(editor, root) {
+  console.info(`${LOG_TAG} Initializing Semantic Buttons for: `, root, editor)
+  ReactDOM.createRoot(root).render(
+    <ThemeUIProvider theme={theme}>
+      <SemanticAndDecorationButtons textareaRef={{ current: editor }} />
+    </ThemeUIProvider>
+  )
 }
 
 const observer = new MutationObserver((mutations) => {
@@ -43,16 +27,39 @@ const observer = new MutationObserver((mutations) => {
       if (
         node.matches &&
         node.matches(
-          '#note_note:not([data-semantic-button-initialized]), ' +
-            '#note-body:not([data-semantic-button-initialized]), ' +
-            '#review-note-body:not([data-semantic-button-initialized]), ' +
-            '[data-testid="content_editor_editablebox"]:not([data-semantic-button-initialized])'
+          '#note_note:not([data-semantic-button-initialized], [type="hidden"]), ' +
+            '#note-body:not([data-semantic-button-initialized], [type="hidden"]), ' +
+            '#review-note-body:not([data-semantic-button-initialized], [type="hidden"])'
         )
       ) {
-        initializeSemanticButtons(node)
+        if (node.dataset.semanticButtonInitialized === 'true') {
+          return
+        }
+        node.dataset.semanticButtonInitialized = 'true'
+
+        const root = document.createElement('div')
+        node.parentNode.appendChild(root)
+
+        initializeSemanticButtons(node, root)
       }
     })
   })
+
+  const richNode = document.querySelector(
+    '[data-testid="content_editor_editablebox"]:not([data-semantic-button-initialized])'
+  )
+  if (richNode) {
+    if (richNode.dataset.semanticButtonInitialized === 'true') {
+      return
+    }
+    richNode.dataset.semanticButtonInitialized = 'true'
+
+    const root = document.createElement('div')
+    richNode.appendChild(root)
+
+    initializeSemanticButtons(richNode, root)
+    initializeSemanticButtons(richNode)
+  }
 })
 
 // Start observing the document
