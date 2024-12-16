@@ -4,6 +4,7 @@ import { ThemeUIProvider } from 'theme-ui'
 import { LOG_TAG } from 'constants'
 import SemanticAndDecorationButtons from './semantic-component/SemanticComponent'
 import { theme } from '../theme'
+import { isGitlabSite, withDebug } from '../utils'
 
 function initializeSemanticButtons(targetNode) {
   console.debug('Initializing Semantic Buttons for: ', targetNode)
@@ -32,6 +33,10 @@ function initializeSemanticButtons(targetNode) {
 
 const observer = new MutationObserver((mutations) => {
   console.debug(`${LOG_TAG} DOM Mutation Observed`)
+  const _isGitlabSite = withDebug(isGitlabSite)
+  if (!_isGitlabSite(window.location.href)) {
+    return
+  }
   mutations.forEach((mutation) => {
     mutation.addedNodes.forEach((node) => {
       if (

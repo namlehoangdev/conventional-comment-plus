@@ -26,7 +26,7 @@ function checkModeByElementBackground(element) {
 
   const backgroundColor = getElementInheritedBackgroundColor(element)
 
-  console.log(
+  console.debug(
     `${LOG_TAG} Detected element background=${backgroundColor} isLight=${tinycolor(backgroundColor).isLight()}`
   )
 

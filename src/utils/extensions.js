@@ -8,7 +8,7 @@ const IconSetByStatus = {
     128: require('../assets/icons/disabledLogo-128.png'),
   },
 }
- 
+
 async function setExtensionIcon(isEnabled, chrome, tabId) {
   const iconSet = IconSetByStatus[isEnabled ? 'enabled' : 'disabled']
 
@@ -16,7 +16,7 @@ async function setExtensionIcon(isEnabled, chrome, tabId) {
     if (chrome.runtime.lastError) {
       console.error('Failed to set icon:', chrome.runtime.lastError)
     } else {
-      console.log('Icon updated successfully!')
+      console.debug('Icon updated successfully!')
     }
   })
 }
