@@ -4,15 +4,13 @@ import { ColorModes, LOG_TAG } from 'constants'
 function getElementInheritedBackgroundColor(element) {
   const styles = window.getComputedStyle(element)
   let backgroundColor = styles.backgroundColor
-
-  // If the background is transparent, check the parent element
+ 
   if (tinycolor(backgroundColor).getAlpha() === 0) {
     const parentElement = element.parentElement
     if (parentElement) {
-      backgroundColor = getElementInheritedBackgroundColor(parentElement) // Recursively check the parent
+      backgroundColor = getElementInheritedBackgroundColor(parentElement)
     } else {
-      // If no parent or background is transparent all the way up, return a fallback (e.g., white)
-      backgroundColor = 'white' // Default background color
+      backgroundColor = 'white'
     }
   }
 
