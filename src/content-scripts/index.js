@@ -7,7 +7,7 @@ import { theme } from '../theme'
 import { isGitlabSite } from '../utils'
 
 function initializeSemanticButtons(targetNode) {
-  console.info(`${LOG_TAG} Initializing Semantic Buttons for : `, targetNode)
+  console.info(`${LOG_TAG} Initializing Semantic Buttons for 1: `, targetNode)
 
   if (targetNode.dataset.semanticButtonInitialized === 'true') {
     return

@@ -1,7 +1,7 @@
 import { COLOR_MODE_STORAGE_ITEM, ColorModes } from './colorMode'
 import { DECORATIONS, DECORATIONS_PRIORITIES, LABELS, SEMANTIC_LABELS_PRIORITIES } from './conventionalComments'
 
-const LOG_TAG = '[ConventionalCommentPlus]'
+const LOG_TAG = '[CCP]'
 
 export {
   LOG_TAG,
