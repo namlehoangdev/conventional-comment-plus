@@ -4,10 +4,10 @@ import { ThemeUIProvider } from 'theme-ui'
 import { LOG_TAG } from 'constants'
 import SemanticAndDecorationButtons from './semantic-component/SemanticComponent'
 import { theme } from '../theme'
-import { isGitlabSite, withDebug } from '../utils'
+import { isGitlabSite } from '../utils'
 
 function initializeSemanticButtons(targetNode) {
-  console.debug('Initializing Semantic Buttons for: ', targetNode)
+  console.info(`${LOG_TAG} Initializing Semantic Buttons for : `, targetNode)
 
   if (targetNode.dataset.semanticButtonInitialized === 'true') {
     return
@@ -32,17 +32,21 @@ function initializeSemanticButtons(targetNode) {
 }
 
 const observer = new MutationObserver((mutations) => {
-  console.debug(`${LOG_TAG} DOM Mutation Observed`)
-  const _isGitlabSite = withDebug(isGitlabSite)
-  if (!_isGitlabSite(window.location.href)) {
+  const runnable = isGitlabSite(window.location.href)
+  if (!runnable) {
     return
   }
+  console.debug(`${LOG_TAG} DOM Mutation Observed runnable=`, runnable)
+
   mutations.forEach((mutation) => {
     mutation.addedNodes.forEach((node) => {
       if (
         node.matches &&
         node.matches(
-          '#note_note:not([data-semantic-button-initialized]), #note-body:not([data-semantic-button-initialized]), #review-note-body:not([data-semantic-button-initialized])'
+          '#note_note:not([data-semantic-button-initialized]), ' +
+            '#note-body:not([data-semantic-button-initialized]), ' +
+            '#review-note-body:not([data-semantic-button-initialized]), ' +
+            '[data-testid="content_editor_editablebox"]:not([data-semantic-button-initialized])'
         )
       ) {
         initializeSemanticButtons(node)
