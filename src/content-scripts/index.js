@@ -10,7 +10,7 @@ function initializeSemanticButtons(editor, root) {
   console.info(`${LOG_TAG} Initializing Semantic Buttons for: `, root, editor)
   ReactDOM.createRoot(root).render(
     <ThemeUIProvider theme={theme}>
-      <SemanticAndDecorationButtons textareaRef={{ current: editor }} />
+      <SemanticAndDecorationButtons editorRef={{ current: editor }} />
     </ThemeUIProvider>
   )
 }
@@ -45,9 +45,7 @@ const observer = new MutationObserver((mutations) => {
     })
   })
 
-  const richNode = document.querySelector(
-    '[data-testid="content_editor_editablebox"]:not([data-semantic-button-initialized])'
-  )
+  const richNode = document.querySelector('[data-node-view-content]:not([data-semantic-button-initialized])')
   if (richNode) {
     if (richNode.dataset.semanticButtonInitialized === 'true') {
       return
@@ -55,7 +53,7 @@ const observer = new MutationObserver((mutations) => {
     richNode.dataset.semanticButtonInitialized = 'true'
 
     const root = document.createElement('div')
-    richNode.appendChild(root)
+    richNode.parentNode.appendChild(root)
 
     initializeSemanticButtons(richNode, root)
     initializeSemanticButtons(richNode)

@@ -10,23 +10,45 @@ const Decorations = DECORATIONS
 const LabelPriorityOrder = SEMANTIC_LABELS_PRIORITIES
 const DecorationPriorityOrder = DECORATIONS_PRIORITIES
 
-const updateTextArea = (textareaElement, text) => {
-  if (!textareaElement) return
-  textareaElement.value = text
-  textareaElement.focus()
+function editableNode(node) {
+  switch (node?.nodeName) {
+    case 'textarea': {
+      return {
+        getValue: () => {
+          return node.value
+        },
+        setValueAndFocus: (val) => {
+          node.value = val
+          node.focus()
+        },
+      }
+    }
+    default: {
+      return {
+        getValue: () => {
+          return node.innerText
+        },
+        setValueAndFocus: (val) => {
+          node.innerText = val
+          node.focus()
+        },
+      }
+    }
+  }
 }
 
-export default function SemanticAndDecorationButtons({ test, textareaRef, ...props }) {
+export default function SemanticAndDecorationButtons({ test, editorRef, ...props }) {
   const [activeLabelKey, setActiveLabelKey] = useState(null)
   const [activeDecorationKeys, setActiveDecorationKeys] = useState(new Set())
   const validDecorationKeys = new Set(LABELS[activeLabelKey]?.decorationKeys || [])
-  const textareaElement = textareaRef?.current
+  const editorElem = editorRef?.current
+  const contentNode = editableNode(editorElem)
 
   const [colorMode, setColorMode] = useColorMode(ColorModes.DEFAULT_LIGHT)
 
   useEffect(() => {
-    if (textareaElement) {
-      const elemColorMode = checkModeByElementBackground(textareaElement)
+    if (editorElem) {
+      const elemColorMode = checkModeByElementBackground(editorElem)
       if (!elemColorMode) {
         return
       }
@@ -36,47 +58,47 @@ export default function SemanticAndDecorationButtons({ test, textareaRef, ...pro
         setColorMode(elemColorMode)
       }
     }
-  }, [textareaElement, colorMode])
+  }, [editorElem, colorMode])
 
   // Handle the label click event
   const onLabelClick = useCallback(
     (event, labelKey) => {
       event.preventDefault()
-      if (activeLabelKey === labelKey && labelKey?.length > 0 && textareaElement) {
+      if (activeLabelKey === labelKey && labelKey?.length > 0 && editorElem) {
         setActiveLabelKey(null)
         setActiveDecorationKeys(new Set())
-        updateTextArea(textareaElement, '')
+        contentNode && contentNode.setValueAndFocus('')
         return
       }
 
-      if (textareaElement) {
-        const currentText = textareaElement.value.trim()
+      if (editorElem) {
+        const currentText = contentNode.getValue().trim()
         const prefixData = retrieveConventionalPrefix(currentText)
         const { text, decorations, label } = genNewData(currentText, prefixData, labelKey, '')
 
         setActiveLabelKey(label.key || null)
         setActiveDecorationKeys(new Set(decorations.map((obj) => obj.key)))
-        updateTextArea(textareaElement, text)
+        contentNode && contentNode.setValueAndFocus(text)
       }
     },
-    [activeLabelKey, textareaElement]
+    [activeLabelKey, editorElem]
   )
 
   // Handle decoration click event
   const onDecorationClick = useCallback(
     (event, decoKey) => {
       event.preventDefault()
-      if (textareaElement) {
-        const currentText = textareaElement.value.trim()
+      if (editorElem) {
+        const currentText = contentNode.getValue().trim()
         const prefixData = retrieveConventionalPrefix(currentText)
         const { text, decorations, label } = genNewData(currentText, prefixData, activeLabelKey, decoKey)
 
         setActiveLabelKey(label?.key)
         setActiveDecorationKeys(new Set(decorations.map((obj) => obj.key)))
-        updateTextArea(textareaElement, text)
+        contentNode && contentNode.setValueAndFocus(text)
       }
     },
-    [activeLabelKey, textareaElement]
+    [activeLabelKey, editorElem]
   )
 
   // Render label buttons
