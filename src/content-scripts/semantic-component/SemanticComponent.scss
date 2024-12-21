@@ -1,3 +1,24 @@
+.conv-comment-buttons-appear {
+  opacity: 1;
+  height: auto;
+  width: auto;
+  padding-left: 0;
+
+  .row-container {
+    opacity: 1;
+    transition: none;
+    z-index: 1;
+
+    button {
+      z-index: 100;
+    }
+  }
+
+  &::after {
+    background-image: none;
+  }
+}
+
 .conv-comment-root {
   * {
     display: flex;
@@ -38,24 +59,7 @@
   }
 
   &:hover {
-    opacity: 1;
-    height: auto;
-    width: auto;
-    padding-left: 0;
-
-    .row-container {
-      opacity: 1;
-      transition: none;
-      z-index: 1;
-
-      button {
-        z-index: 100;
-      }
-    }
-
-    &::after {
-      background-image: none;
-    }
+    @extend .conv-comment-buttons-appear
   }
 }
 

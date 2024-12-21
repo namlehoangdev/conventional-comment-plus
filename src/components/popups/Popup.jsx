@@ -1,46 +1,15 @@
 /** @jsxImportSource theme-ui */
-import React, { useRef } from 'react'
-import { Box, Divider, Select, Switch, useColorMode } from 'theme-ui'
-
-import SemanticAndDecorationButtons from '../../content-scripts/semantic-component/SemanticComponent'
-import { ColorModes } from '../../constants'
+import React from 'react'
+import { Box, Select } from 'theme-ui'
 import Footer from '../footers/Footer'
 import Header from '../headers/Header'
-import Option from '../Options/Option'
+import Option from '../options/Option'
+import Test from '../tests/Test'
 
-const TESTING = false
+const TESTING = true
 
 function Popup() {
-  const textAreaRef = useRef(null)
-  const [colorMode, setColorMode] = useColorMode()
-
   function handleGitPlatformChange(event) {}
-
-  function handleThemeChange(event) {
-    const newColor = colorMode === ColorModes.DEFAULT_LIGHT ? ColorModes.DEFAULT_DARK : ColorModes.DEFAULT_LIGHT
-    setColorMode(newColor)
-  }
-
-  function renderTestArea() {
-    return (
-      <>
-        <Option title="Change theme" description="Manually change theme (Github/Gitlab) if autodetect not working">
-          <Box sx={{ mt: '10px' }}>
-            <Switch label="Dark mode?" checked={colorMode === ColorModes.DEFAULT_DARK} onChange={handleThemeChange} />
-          </Box>
-        </Option>
-        <Divider />
-        <textarea
-          ref={textAreaRef}
-          rows="5"
-          cols="30"
-          placeholder="Enter text here..."
-          style={{ marginBottom: '50px' }}
-        />
-        <SemanticAndDecorationButtons test={false} textareaRef={textAreaRef} style={{ marginBottom: '20px' }} />
-      </>
-    )
-  }
 
   function renderContent() {
     return (
@@ -76,9 +45,9 @@ function Popup() {
   }
 
   return (
-    <Box sx={{ p: '20px', width: 'auto', minWidth: TESTING ? '2000px' : '380px' }}>
+    <Box sx={{ p: '20px', width: 'auto', minWidth: TESTING ? '800px' : '380px' }}>
       <Header />
-      {TESTING ? renderTestArea() : renderContent()}
+      {TESTING ? <Test /> : renderContent()}
       <Footer />
     </Box>
   )

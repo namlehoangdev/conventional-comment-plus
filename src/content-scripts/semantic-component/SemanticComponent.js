@@ -37,7 +37,7 @@ function editableNode(node) {
   }
 }
 
-export default function SemanticAndDecorationButtons({ test, editorRef, ...props }) {
+export default function SemanticAndDecorationButtons({ autoHide = true, editorRef, ...props }) {
   const [activeLabelKey, setActiveLabelKey] = useState(null)
   const [activeDecorationKeys, setActiveDecorationKeys] = useState(new Set())
   const validDecorationKeys = new Set(LABELS[activeLabelKey]?.decorationKeys || [])
@@ -132,6 +132,7 @@ export default function SemanticAndDecorationButtons({ test, editorRef, ...props
       return (
         <ChildButton
           key={key}
+          id={key}
           up={false}
           active={active}
           disabled={disabled}
@@ -145,10 +146,10 @@ export default function SemanticAndDecorationButtons({ test, editorRef, ...props
     [activeDecorationKeys, onDecorationClick, validDecorationKeys]
   )
 
-  const visibilityStyle = test ? { opacity: 1 } : undefined
+  const appear = autoHide ? undefined : 'conv-comment-buttons-appear'
 
   return (
-    <Box {...props} className={`conv-comment-root-${colorMode}`} style={visibilityStyle}>
+    <Box {...props} className={`conv-comment-root-${colorMode} ${appear}`}>
       <Box className={'row-container'}>{LabelPriorityOrder.map(renderLabelButton)}</Box>
       <Box className={'row-container'}>{DecorationPriorityOrder.map(renderDecorationButton)}</Box>
     </Box>
