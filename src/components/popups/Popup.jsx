@@ -8,8 +8,10 @@ import Test from '../tests/Test'
 
 const TESTING = true
 
-function Popup() {
-  function handleGitPlatformChange(event) {}
+export default function Popup() {
+  function handleGitPlatformChange(event) {
+    // handle logic here
+  }
 
   function renderContent() {
     return (
@@ -18,34 +20,31 @@ function Popup() {
           title="Change Git platform"
           description="Manually detect platform (Github/Gitlab) if autodetect not working"
         >
-          <Select
-            value={'Gitlab'}
-            onChange={handleGitPlatformChange}
-            variant="selectInput"
-            sx={{
-              mt: '10px',
-              cursor: 'pointer',
-            }}
-          >
+          <Select value="Gitlab" onChange={handleGitPlatformChange} variant="selectInput" sx={styles.select}>
             <option value="Gitlab">Gitlab</option>
-            <option disabled={true} value="Github">
+            <option disabled value="Github">
               Github (Coming soon)
             </option>
-            <option disabled={true} value="Bitbucket">
+            <option disabled value="Bitbucket">
               Bitbucket (Coming soon)
             </option>
-            <option disabled={true} value="Auto">
+            <option disabled value="Auto">
               Auto (Coming soon)
             </option>
           </Select>
         </Option>
-        <Option title="Import conventional configurations (Comming soon)" description="Comming soon" />
+        <Option title="Import conventional configurations (Coming soon)" description="Coming soon" />
       </>
     )
   }
 
   return (
-    <Box sx={{ p: '20px', width: 'auto', minWidth: TESTING ? '800px' : '380px' }}>
+    <Box
+      sx={{
+        ...styles.container,
+        ...(TESTING ? styles.largeContainer : styles.smallContainer),
+      }}
+    >
       <Header />
       {TESTING ? <Test /> : renderContent()}
       <Footer />
@@ -53,4 +52,20 @@ function Popup() {
   )
 }
 
-export default Popup
+// Extract your styles into a variable
+const styles = {
+  container: {
+    p: '20px',
+    width: 'auto',
+  },
+  largeContainer: {
+    minWidth: '800px',
+  },
+  smallContainer: {
+    minWidth: '380px',
+  },
+  select: {
+    mt: '10px',
+    cursor: 'pointer',
+  },
+}
