@@ -14,7 +14,7 @@ async function setExtensionIcon(isEnabled, chrome, tabId) {
 
   chrome.action.setIcon({ path: iconSet, tabId }, () => {
     if (chrome.runtime.lastError) {
-      console.error('Failed to set icon:', chrome.runtime.lastError)
+      console.debug('Failed to set icon:', chrome.runtime.lastError)
     } else {
       console.debug('Icon updated successfully!')
     }

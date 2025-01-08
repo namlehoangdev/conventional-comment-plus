@@ -64,7 +64,6 @@ export default function SemanticAndDecorationButtons({ autoHide = true, unsuppor
   // Handle the label click event
   const onLabelClick = useCallback(
     (event, labelKey) => {
-      console.log('button clicked')
       event.preventDefault()
       if (activeLabelKey === labelKey && labelKey?.length > 0 && editorElem) {
         setActiveLabelKey(null)

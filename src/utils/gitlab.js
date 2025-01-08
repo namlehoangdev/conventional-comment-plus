@@ -13,7 +13,7 @@ function isGitlabSite(url) {
     console.debug(`${LOG_TAG} isGitLabSite - hostname`, hostname)
     return result
   } catch (error) {
-    console.error('Invalid URL:', url, error)
+    console.debug('Invalid URL:', url, error)
     return false
   }
 }

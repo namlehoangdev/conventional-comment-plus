@@ -7,7 +7,7 @@ import { theme } from '../theme'
 import { isGitlabSite } from '../utils'
 
 function initializeSemanticButtons(editor, root, unsupportedMessage) {
-  console.info(`${LOG_TAG} Initializing Semantic Buttons for: `, root, editor)
+  console.debug(`${LOG_TAG} Initializing Semantic Buttons for: `, root, editor)
   ReactDOM.createRoot(root).render(
     <ThemeUIProvider theme={theme}>
       <SemanticAndDecorationButtons editorRef={{ current: editor }} unsupportedMessage={unsupportedMessage} />

@@ -14,7 +14,7 @@ function withDebug(callable) {
       result = callable(...args)
       console.debug(`${LOG_TAG}[${functionName}] Success | args:`, args, '| result:', result)
     } catch (error) {
-      console.error(`${LOG_TAG}[${functionName}] Error | args:`, args, '| error:', error)
+      console.debug(`${LOG_TAG}[${functionName}] Error | args:`, args, '| error:', error)
       throw error
     }
 
