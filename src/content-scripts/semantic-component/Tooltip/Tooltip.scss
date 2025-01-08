@@ -1,4 +1,3 @@
-
 .tooltip {
   opacity: 1 !important;
   z-index: 3;
@@ -6,12 +5,12 @@
 
 .tooltip-light {
   @extend .tooltip;
-  background: black !important;
-  color: white !important;
+  background: #121212 !important;
+  color: #F9FAFB !important;
 }
 
 .tooltip-dark {
   @extend .tooltip;
-  background: white !important;
-  color: black !important;
+  background: #F9FAFB !important;
+  color: #121212 !important;
 }

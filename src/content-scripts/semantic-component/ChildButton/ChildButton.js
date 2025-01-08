@@ -1,21 +1,10 @@
 import React from 'react'
-import { Button, useColorMode } from 'theme-ui'
-import { Tooltip } from 'react-tooltip'
-import './ChildButton.scss'
-import { ColorModes } from 'constants'
+import { Button } from 'theme-ui'
+import Tooltip from '../Tooltip/Tooltip'
 
 export default function ChildButton({ children, tooltipID, active = false, title, ...props }) {
   const variant = active ? 'active' : 'primary'
   const refTooltipID = `tooltip-${tooltipID}`
-
-  const [colorMode, setColorMode] = useColorMode(ColorModes.DEFAULT_LIGHT)
-
-  function renderTooltip() {
-    if (!title || title.length === 0) {
-      return null
-    }
-    return <Tooltip className={`tooltip-${colorMode}`} id={refTooltipID} delayShow={800} offset={20} />
-  }
 
   return (
     <>
@@ -29,7 +18,7 @@ export default function ChildButton({ children, tooltipID, active = false, title
       >
         {children}
       </Button>
-      {renderTooltip()}
+      {title && title.length > 0 && <Tooltip id={refTooltipID} delayShow={800} offset={20} />}
     </>
   )
 }

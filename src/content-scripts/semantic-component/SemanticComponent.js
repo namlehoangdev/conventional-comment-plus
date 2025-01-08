@@ -4,7 +4,7 @@ import { Box, useColorMode } from 'theme-ui'
 import { ColorModes, DECORATIONS, DECORATIONS_PRIORITIES, LABELS, LOG_TAG, SEMANTIC_LABELS_PRIORITIES } from 'constants'
 import { checkModeByElementBackground, genNewData, retrieveConventionalPrefix } from 'utils'
 import ChildButton from './ChildButton/ChildButton'
-import { Tooltip } from 'react-tooltip'
+import Tooltip from './Tooltip/Tooltip'
 
 const SemanticLabels = LABELS
 const Decorations = DECORATIONS
@@ -166,9 +166,7 @@ export default function SemanticAndDecorationButtons({ autoHide = true, unsuppor
         <Box className={'row-container'}>{LabelPriorityOrder.map(renderLabelButton)}</Box>
         <Box className={'row-container'}>{DecorationPriorityOrder.map(renderDecorationButton)}</Box>
       </Box>
-      {isUnSupported && (
-        <Tooltip className={`tooltip-${colorMode}`} id={semanticComponentTooltipRef} delayShow={200} offset={20} />
-      )}
+      {isUnSupported && <Tooltip id={semanticComponentTooltipRef} delayShow={200} offset={20} />}
     </>
   )
 }

@@ -107,20 +107,3 @@
 .conv-comment-buttons-appear {
   @extend .conv-comment-buttons;
 }
-
-.tooltip {
-  opacity: 1 !important;
-  z-index: 3;
-}
-
-.tooltip-light {
-  @extend .tooltip;
-  background: black !important;
-  color: white !important;
-}
-
-.tooltip-dark {
-  @extend .tooltip;
-  background: white !important;
-  color: black !important;
-}
