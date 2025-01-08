@@ -63,6 +63,7 @@ export default function SemanticAndDecorationButtons({ autoHide = true, editorRe
   // Handle the label click event
   const onLabelClick = useCallback(
     (event, labelKey) => {
+      console.log('button clicked')
       event.preventDefault()
       if (activeLabelKey === labelKey && labelKey?.length > 0 && editorElem) {
         setActiveLabelKey(null)
@@ -110,6 +111,7 @@ export default function SemanticAndDecorationButtons({ autoHide = true, editorRe
       return (
         <ChildButton
           key={key}
+          tooltipID={key}
           active={active}
           up={true}
           disabled={disabled}
@@ -146,10 +148,10 @@ export default function SemanticAndDecorationButtons({ autoHide = true, editorRe
     [activeDecorationKeys, onDecorationClick, validDecorationKeys]
   )
 
-  const appear = autoHide ? undefined : 'conv-comment-buttons-appear'
+  const autoHideClassName = autoHide ? undefined : 'conv-comment-buttons-appear'
 
   return (
-    <Box {...props} className={`conv-comment-root-${colorMode} ${appear}`}>
+    <Box {...props} className={`conv-comment-root-${colorMode} ${autoHideClassName}`}>
       <Box className={'row-container'}>{LabelPriorityOrder.map(renderLabelButton)}</Box>
       <Box className={'row-container'}>{DecorationPriorityOrder.map(renderDecorationButton)}</Box>
     </Box>
