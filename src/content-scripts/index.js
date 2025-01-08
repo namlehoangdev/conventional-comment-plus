@@ -6,11 +6,11 @@ import SemanticAndDecorationButtons from './semantic-component/SemanticComponent
 import { theme } from '../theme'
 import { isGitlabSite } from '../utils'
 
-function initializeSemanticButtons(editor, root) {
+function initializeSemanticButtons(editor, root, unsupportedMessage) {
   console.info(`${LOG_TAG} Initializing Semantic Buttons for: `, root, editor)
   ReactDOM.createRoot(root).render(
     <ThemeUIProvider theme={theme}>
-      <SemanticAndDecorationButtons editorRef={{ current: editor }} />
+      <SemanticAndDecorationButtons editorRef={{ current: editor }} unsupportedMessage={unsupportedMessage} />
     </ThemeUIProvider>
   )
 }
@@ -55,8 +55,7 @@ const observer = new MutationObserver((mutations) => {
     const root = document.createElement('div')
     richNode.parentNode.appendChild(root)
 
-    initializeSemanticButtons(richNode, root)
-    initializeSemanticButtons(richNode)
+    initializeSemanticButtons(richNode, root, 'Rich editor mode is not supported.')
   }
 })
 

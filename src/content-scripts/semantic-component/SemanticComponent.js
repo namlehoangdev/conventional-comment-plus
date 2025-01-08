@@ -4,6 +4,7 @@ import { Box, useColorMode } from 'theme-ui'
 import { ColorModes, DECORATIONS, DECORATIONS_PRIORITIES, LABELS, LOG_TAG, SEMANTIC_LABELS_PRIORITIES } from 'constants'
 import { checkModeByElementBackground, genNewData, retrieveConventionalPrefix } from 'utils'
 import ChildButton from './ChildButton/ChildButton'
+import { Tooltip } from 'react-tooltip'
 
 const SemanticLabels = LABELS
 const Decorations = DECORATIONS
@@ -37,7 +38,7 @@ function editableNode(node) {
   }
 }
 
-export default function SemanticAndDecorationButtons({ autoHide = true, editorRef, ...props }) {
+export default function SemanticAndDecorationButtons({ autoHide = true, unsupportedMessage, editorRef, ...props }) {
   const [activeLabelKey, setActiveLabelKey] = useState(null)
   const [activeDecorationKeys, setActiveDecorationKeys] = useState(new Set())
   const validDecorationKeys = new Set(LABELS[activeLabelKey]?.decorationKeys || [])
@@ -149,11 +150,25 @@ export default function SemanticAndDecorationButtons({ autoHide = true, editorRe
   )
 
   const autoHideClassName = autoHide ? undefined : 'conv-comment-buttons-appear'
+  const isUnSupported = unsupportedMessage && unsupportedMessage.length > 0
+  const themeClassname = isUnSupported ? `conv-comment-root-${colorMode}-unsupported` : `conv-comment-root-${colorMode}`
+  const semanticComponentTooltipRef = 'conv-comment-root-tooltip-id'
 
   return (
-    <Box {...props} className={`conv-comment-root-${colorMode} ${autoHideClassName}`}>
-      <Box className={'row-container'}>{LabelPriorityOrder.map(renderLabelButton)}</Box>
-      <Box className={'row-container'}>{DecorationPriorityOrder.map(renderDecorationButton)}</Box>
-    </Box>
+    <>
+      <Box
+        {...props}
+        className={`${themeClassname} ${autoHideClassName}`}
+        data-tooltip-id={semanticComponentTooltipRef}
+        data-tooltip-content={unsupportedMessage}
+        data-tooltip-place="top"
+      >
+        <Box className={'row-container'}>{LabelPriorityOrder.map(renderLabelButton)}</Box>
+        <Box className={'row-container'}>{DecorationPriorityOrder.map(renderDecorationButton)}</Box>
+      </Box>
+      {isUnSupported && (
+        <Tooltip className={`tooltip-${colorMode}`} id={semanticComponentTooltipRef} delayShow={200} offset={20} />
+      )}
+    </>
   )
 }
