@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react'
 import { Box, Switch, Textarea } from 'theme-ui'
 import Option from '../options/Option'
 
-import SemanticAndDecorationButtons from '../../content-scripts/semantic-component/SemanticComponent'
+import SemanticAndDecorationButtons from '../../../content-scripts/semantic-component/SemanticComponent'
 
 export default function Test() {
   const textAreaRef = useRef(null)

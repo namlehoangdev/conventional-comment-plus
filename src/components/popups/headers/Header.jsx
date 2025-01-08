@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, Flex, Image } from 'theme-ui'
-import logo from '../../assets/icons/icon128'
+import logo from '../../../assets/icons/icon128'
 
 function Header(props) {
   return (

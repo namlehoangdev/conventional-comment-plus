@@ -2,9 +2,9 @@
 import React from 'react'
 import { Box, Select } from 'theme-ui'
 import Footer from '../footers/Footer'
-import Header from '../headers/Header'
-import Option from '../options/Option'
-import Test from '../tests/Test'
+import Header from './headers/Header'
+import Option from './options/Option'
+import Test from './tests/Test'
 
 const TESTING = true
 
