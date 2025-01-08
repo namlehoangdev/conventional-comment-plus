@@ -59,6 +59,7 @@ const LABELS = {
       DECORATION_KEY.BLOCKING,
       DECORATION_KEY.NON_BLOCKING,
       DECORATION_KEY.IF_MINOR,
+      DECORATION_KEY.UNIT_TEST,
       DECORATION_KEY.PERFORMANCE,
     ],
     tooltip: 'Small, necessary changes.',
@@ -66,7 +67,12 @@ const LABELS = {
   [LABEL_KEY.SUGGESTION]: {
     key: LABEL_KEY.SUGGESTION,
     content: 'suggestion',
-    decorationKeys: [DECORATION_KEY.NON_BLOCKING, DECORATION_KEY.IF_MINOR, DECORATION_KEY.UNIT_TEST],
+    decorationKeys: [
+      DECORATION_KEY.NON_BLOCKING,
+      DECORATION_KEY.IF_MINOR,
+      DECORATION_KEY.UNIT_TEST,
+      DECORATION_KEY.PERFORMANCE,
+    ],
     tooltip: 'Proposes improvements for clarity.',
   },
   [LABEL_KEY.ISSUE]: {
@@ -84,25 +90,37 @@ const LABELS = {
   [LABEL_KEY.QUESTION]: {
     key: LABEL_KEY.QUESTION,
     content: 'question',
-    decorationKeys: [DECORATION_KEY.NON_BLOCKING, DECORATION_KEY.PERFORMANCE],
+    decorationKeys: [
+      DECORATION_KEY.NON_BLOCKING,
+      DECORATION_KEY.BLOCKING,
+      DECORATION_KEY.IF_MINOR,
+      DECORATION_KEY.UNIT_TEST,
+      DECORATION_KEY.PERFORMANCE,
+    ],
     tooltip: 'Requests clarification.',
   },
   [LABEL_KEY.THOUGHT]: {
     key: LABEL_KEY.THOUGHT,
     content: 'thought',
-    decorationKeys: [DECORATION_KEY.BLOCKING, DECORATION_KEY.NON_BLOCKING],
+    decorationKeys: [DECORATION_KEY.NON_BLOCKING, DECORATION_KEY.PERFORMANCE, DECORATION_KEY.UNIT_TEST],
     tooltip: 'Non-blocking idea for exploration.',
   },
   [LABEL_KEY.PRAISE]: {
     key: LABEL_KEY.PRAISE,
     content: 'praise',
-    decorationKeys: [DECORATION_KEY.NON_BLOCKING],
+    decorationKeys: [DECORATION_KEY.NON_BLOCKING, DECORATION_KEY.PERFORMANCE, DECORATION_KEY.UNIT_TEST],
     tooltip: 'Recognizes positive contributions.',
   },
   [LABEL_KEY.CHORE]: {
     key: LABEL_KEY.CHORE,
     content: 'chore',
-    decorationKeys: [DECORATION_KEY.BLOCKING, DECORATION_KEY.NON_BLOCKING, DECORATION_KEY.IF_MINOR],
+    decorationKeys: [
+      DECORATION_KEY.BLOCKING,
+      DECORATION_KEY.NON_BLOCKING,
+      DECORATION_KEY.IF_MINOR,
+      DECORATION_KEY.UNIT_TEST,
+      DECORATION_KEY.PERFORMANCE,
+    ],
     tooltip: 'Routine tasks before acceptance.',
   },
 }
