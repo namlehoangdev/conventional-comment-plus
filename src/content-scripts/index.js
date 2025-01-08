@@ -59,5 +59,8 @@ const observer = new MutationObserver((mutations) => {
   }
 })
 
-// Start observing the document
-observer.observe(document.body, { childList: true, subtree: true })
+try {
+  observer.observe(document.body, { childList: true, subtree: true })
+} catch (e) {
+  console.debug(`${LOG_TAG} observer.observe error`, e)
+}

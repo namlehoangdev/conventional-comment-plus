@@ -6,7 +6,7 @@ import Header from './headers/Header'
 import Option from './options/Option'
 import Test from './tests/Test'
 
-const TESTING = true
+const TESTING = false
 
 export default function Popup() {
   function handleGitPlatformChange(event) {
