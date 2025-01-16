@@ -2,7 +2,7 @@
   "name": "__MSG_extName__",
   "description": "__MSG_extDesc__",
   "manifest_version": 3,
-  "version": "0.0.0",
+  "version": "1.0.0 beta",
   "default_locale": "en",
   "permissions": [
     "storage",
