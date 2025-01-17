@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "Conventional Comments Plus - Подобрете коментирането си в Git VCS"
+    "message": "Conventional Comments Plus – По-добри Git коментари"
   },
   "extDesc": {
     "message": "Conventional Comments Plus подобрява Git VCS с персонализируеми шаблони за коментари, експортиране на конфигурации за екипи, поддръжка на множество Git и тъмен/светъл режим."
