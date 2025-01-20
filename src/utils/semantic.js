@@ -21,7 +21,7 @@ function retrieveConventionalPrefix(inputString) {
 
 function genConventionalCommentPrefix(semanticLabel = '', decorations = []) {
   const decoStr = decorations && decorations?.length > 0 ? `${decorations.join(', ')}` : ''
-  return `**${semanticLabel}${decoStr ? ` (${decoStr})` : ''}:** `
+  return `**${semanticLabel}${decoStr ? ` (${decoStr})` : ''}:**`
 }
 
 function genNewData(currentText, prefixData, labelKey = '', decorationKey = '') {
