@@ -12,7 +12,8 @@ const LabelPriorityOrder = SEMANTIC_LABELS_PRIORITIES
 const DecorationPriorityOrder = DECORATIONS_PRIORITIES
 
 function editableNode(node) {
-  switch (node?.nodeName) {
+  const nodeName = node && node.nodeName && node.nodeName.toLowerCase()
+  switch (nodeName) {
     case 'textarea': {
       return {
         getValue: () => {
