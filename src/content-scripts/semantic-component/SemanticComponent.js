@@ -13,6 +13,8 @@ const DecorationPriorityOrder = DECORATIONS_PRIORITIES
 
 function editableNode(node) {
   const nodeName = node && node.nodeName && node.nodeName.toLowerCase()
+  const cancelableEvent = new Event("input", {bubbles: true, cancelable: true});
+
   switch (nodeName) {
     case 'textarea': {
       return {
@@ -22,6 +24,7 @@ function editableNode(node) {
         setValueAndFocus: (val) => {
           node.value = val
           node.focus()
+          node.dispatchEvent(cancelableEvent);
         },
       }
     }
@@ -33,6 +36,7 @@ function editableNode(node) {
         setValueAndFocus: (val) => {
           node.innerText = val
           node.focus()
+          node.dispatchEvent(cancelableEvent);
         },
       }
     }
