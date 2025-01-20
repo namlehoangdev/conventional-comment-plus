@@ -3,6 +3,6 @@
     "message": "Conventional Comments Plus - Daha İyi Git Yorumları"
   },
   "extDesc": {
-    "message": "Conventional Comments Plus, özelleştirilebilir yorum şablonları, takım yapılandırma dışa aktarımları, çoklu Git desteği ve karanlık/açık mod ile Git VCS'yi geliştirir."
+    "message": "Git VCS'yi özelleştirilebilir yorum şablonları, ekip yapılandırması dışa aktarımları ve multi-Git desteği ile geliştiren araç."
   }
 }

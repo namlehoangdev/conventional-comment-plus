@@ -3,6 +3,6 @@
     "message": "Conventional Comments Plus - Melhores comentários no Git"
   },
   "extDesc": {
-    "message": "Conventional Comments Plus aprimora o Git VCS com modelos de comentários personalizáveis, exportação de configurações para equipes, suporte a múltiplos Git e modos claro/escuro."
+    "message": "Ferramenta para melhorar o Git VCS com modelos de comentários personalizáveis, exportação de configurações de equipe e suporte a multi-Git."
   }
 }

@@ -3,6 +3,6 @@
     "message": "Conventional Comments Plus - Bolji Git komentari"
   },
   "extDesc": {
-    "message": "Conventional Comments Plus poboljšava Git VCS s prilagodljivim predlošcima za komentare, izvozom konfiguracija za timove, podrškom za više Git-a i tamnim/svijetlim načinom rada."
+    "message": "Alat za poboljšanje Git VCS s prilagodljivim šablonama komentara, izvozima postavki tima i podrškom za multi-Git."
   }
 }

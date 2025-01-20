@@ -3,6 +3,6 @@
     "message": "Conventional Comments Plus - Millors comentaris de Git"
   },
   "extDesc": {
-    "message": "Conventional Comments Plus millora Git VCS amb plantilles de comentaris personalitzables, exportació de configuracions d'equip, suport per a múltiples Git i modes fosc/clars."
+    "message": "Eina per millorar Git VCS amb plantilles de comentaris personalitzables, exportacions de configuració de l'equip i suport per a multi-Git."
   }
 }

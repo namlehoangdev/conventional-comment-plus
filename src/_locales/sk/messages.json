@@ -3,6 +3,6 @@
     "message": "Conventional Comments Plus - Lepšie komentáre v Gite"
   },
   "extDesc": {
-    "message": "Conventional Comments Plus vylepšuje Git VCS s prispôsobiteľnými šablónami komentárov, exportom nastavení pre tím, podporou viacerých Git a tmavým/svetlým režimom."
+    "message": "Nástroj na vylepšenie Git VCS s prispôsobiteľnými šablónami komentárov, exportami konfigurácie tímu a podporou multi-Git."
   }
 }

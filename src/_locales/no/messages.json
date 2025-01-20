@@ -3,6 +3,6 @@
     "message": "Conventional Comments Plus - Bedre Git-kommentarer"
   },
   "extDesc": {
-    "message": "Conventional Comments Plus forbedrer Git VCS med tilpassbare kommentar-maler, eksport av teamkonfigurasjoner, støtte for flere Git-repositorier og mørk/lys modus."
+    "message": "Verktøy for å forbedre Git VCS med tilpassede kommentarsmaler, eksport av teamkonfigurasjon og multi-Git-støtte."
   }
 }

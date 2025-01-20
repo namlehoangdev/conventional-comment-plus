@@ -3,6 +3,6 @@
     "message": "Conventional Comments Plus - Jobb Git-megjegyzések"
   },
   "extDesc": {
-    "message": "A Conventional Comments Plus javítja a Git VCS-t testreszabható komment mintákkal, csapat konfiguráció exportálással, több Git támogatással és sötét/világos módokkal."
+    "message": "Eszköz a Git VCS javításához testreszabható kommentár sablonokkal, csapatkonfiguráció exportálásával és multi-Git támogatással."
   }
 }

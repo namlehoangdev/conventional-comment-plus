@@ -3,6 +3,6 @@
     "message": "Conventional Comments Plus - 更好的 Git 評論"
   },
   "extDesc": {
-    "message": "Conventional Comments Plus 透過可自訂的評論模板、團隊配置匯出、支援多 Git 以及深色/亮色模式，提升 Git VCS。"
+    "message": "用於增強 Git VCS 的工具，支持自訂評論模板、團隊配置匯出及多 Git 支援。"
   }
 }

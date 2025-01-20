@@ -3,6 +3,6 @@
     "message": "Conventional Comments Plus - 더 나은 Git 주석"
   },
   "extDesc": {
-    "message": "Conventional Comments Plus는 사용자 정의 가능한 주석 템플릿, 팀 구성 내보내기, 다중 Git 지원 및 어두운/밝은 모드를 통해 Git VCS를 향상시킵니다."
+    "message": "Git VCS를 맞춤형 댓글 템플릿, 팀 설정 내보내기 및 multi-Git 지원으로 향상시키는 도구."
   }
 }

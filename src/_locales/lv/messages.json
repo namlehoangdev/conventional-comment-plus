@@ -3,6 +3,6 @@
     "message": "Conventional Comments Plus - Labāki Git komentāri"
   },
   "extDesc": {
-    "message": "Conventional Comments Plus uzlabo Git VCS ar pielāgojamiem komentāru veidnēm, komandu konfigurācijas eksportēšanu, vairāku Git atbalstu un tumšo/gaišo režīmu."
+    "message": "Rīks, lai uzlabotu Git VCS ar pielāgojamiem komentāru veidnēm, komandas konfigurācijas eksportu un multi-Git atbalstu."
   }
 }

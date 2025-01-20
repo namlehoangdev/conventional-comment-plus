@@ -3,6 +3,6 @@
     "message": "Conventional Comments Plus - Better Git Comments"
   },
   "extDesc": {
-    "message": "Conventional Comments Plus enhances Git VCS with customizable comment templates, team config exports, multi-Git support, and dark/light mode."
+    "message": "Tool to enhance Git VCS with customizable comment templates, team config exports, and multi-Git support."
   }
 }
