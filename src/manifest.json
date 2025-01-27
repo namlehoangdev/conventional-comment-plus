@@ -6,10 +6,8 @@
   "version_name": "1.0.0 beta",
   "default_locale": "en",
   "permissions": [
-    "storage",
     "tabs",
-    "activeTab",
-    "declarativeNetRequestWithHostAccess"
+    "activeTab"
   ],
   "background": {
     "service_worker": "background.bundle.js"
@@ -22,15 +20,6 @@
   },
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'"
-  },
-  "declarative_net_request": {
-    "rule_resources": [
-      {
-        "id": "ruleset_1",
-        "enabled": true,
-        "path": "rules.json"
-      }
-    ]
   },
   "content_scripts": [
     {
