@@ -4,6 +4,10 @@
 experience by providing customizable comment templates, team configuration exports, multi-Git support, and dark/light
 mode themes.
 
+**Chrome Webstore:** [Conventional Comments Plus](https://chromewebstore.google.com/detail/conventional-comments-plu/obkakaamoapbcgbhieooiekcbcilncae)
+
+**Demo:** [Watch Demo](https://www.youtube.com/watch?v=FJwmOubCfGs)
+
 ## Features
 
 - **Customizable Comment Templates**: Easily create and use templates for your Git commit comments.
@@ -21,6 +25,11 @@ Clone this repo and run these commands to start the development server.
 ```
 yarn
 yarn start
+```
+
+For build:
+```
+yarn build-chrome
 ```
 
 Load the extension on Chrome:
