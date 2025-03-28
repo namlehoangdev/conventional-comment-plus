@@ -2,8 +2,8 @@
   "name": "__MSG_extName__",
   "description": "__MSG_extDesc__",
   "manifest_version": 3,
-  "version": "1.0.0",
-  "version_name": "1.0.0 beta",
+  "version": "1.0.1",
+  "version_name": "1.0.1",
   "default_locale": "en",
   "permissions": [
     "tabs",
