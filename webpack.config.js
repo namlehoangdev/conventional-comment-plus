@@ -220,6 +220,7 @@ if (env.NODE_ENV === 'development') {
         terserOptions: {
           compress: {
             drop_console: false,
+            pure_funcs: ['console.debug'],
           },
         },
       }),
