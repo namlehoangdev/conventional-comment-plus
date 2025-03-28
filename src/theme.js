@@ -24,9 +24,10 @@ export const theme = {
   },
   colors: {
     text: '#2D2D2D', // Softer black for text
-    background: '#F9FAFB', // Light grey for a gentle background
+    background: '#fefefe', // Light grey for a gentle background,
+    lightBorder: '#f5f5f5',
     primary: '#1F74C8', // Slightly darker blue for better contrast
-    disabled: '#A8A8A8', // Subdued grey for disabled elements
+    disabled: '#dedede', // Subdued grey for disabled elements
     modes: {
       dark: {
         primary: '#4AA8FF', // Softer blue for dark mode
@@ -40,7 +41,9 @@ export const theme = {
   // Light mode button states
   buttons: {
     primary: {
-      backgroundColor: 'transparent',
+      backgroundColor: 'background',
+      border: '1px solid',
+      borderColor: 'lightBorder',
       color: 'text',
       cursor: 'pointer',
       transition: 'none',
@@ -57,7 +60,7 @@ export const theme = {
     active: {
       color: 'primary',
       transform: 'scale(0.98)',
-      backgroundColor: 'transparent',
+      backgroundColor: '#fff',
       border: '2px solid',
       borderColor: 'primary',
       outline: '1px solid',
